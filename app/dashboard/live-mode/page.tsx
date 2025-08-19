@@ -2,6 +2,24 @@
 
 import { useEffect, useState, useRef } from "react";
 
+/** --- Web Speech API typing shim (build-safe on Vercel) --- */
+type SpeechRecognition = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  start(): void;
+  stop(): void;
+  onresult: (e: any) => void;
+  onend: () => void;
+};
+declare global {
+  interface Window {
+    SpeechRecognition?: new () => SpeechRecognition;
+    webkitSpeechRecognition?: new () => SpeechRecognition;
+  }
+}
+/** -------------------------------------------------------- */
+
 interface Station {
   id: string;
   title: string;
@@ -87,8 +105,8 @@ export default function LiveModePage() {
 
   /** Speak scenario aloud */
   const speakScenario = (text: string) => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
     const synth = window.speechSynthesis;
-    if (!synth) return;
     const utter = new SpeechSynthesisUtterance(text);
     const voice =
       synth.getVoices().find((v) => v.name.includes("Google UK English")) ||
@@ -106,18 +124,21 @@ export default function LiveModePage() {
       setRecording(false);
       return;
     }
-    const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
+
+    const SR =
+      (typeof window !== "undefined" && window.SpeechRecognition) ||
+      (typeof window !== "undefined" && window.webkitSpeechRecognition);
+
+    if (!SR) {
       alert("Speech Recognition not supported in this browser.");
       return;
     }
-    const recog: SpeechRecognition = new SpeechRecognition();
+
+    const recog: SpeechRecognition = new SR();
     recog.lang = "en-GB";
     recog.continuous = true;
     recog.interimResults = true;
-    recog.onresult = (e) => {
+    recog.onresult = (e: any) => {
       let transcript = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
         transcript += e.results[i][0].transcript;
@@ -321,7 +342,7 @@ export default function LiveModePage() {
               onClick={retake}
               className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold"
             >
-              🔄 Retake Exam with New Questions
+              🔄 Retake Exam with New Questionsss
             </button>
           </div>
         )}
