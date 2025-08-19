@@ -7,9 +7,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function GET(
   _req: Request,
-  { params }: { params: { id: string } }
+  context: { params?: Record<string, string | string[]> } // <- valid shape
 ) {
-  const id = params?.id;
+  const raw = context.params?.id;
+  const id = Array.isArray(raw) ? raw[0] : raw;
+
   if (!id) {
     return NextResponse.json({ error: "Missing session id" }, { status: 400 });
   }
