@@ -1,18 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
-export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  try {
-    const s = await stripe.checkout.sessions.retrieve(params.id);
-    const email = s.customer_details?.email || s.customer_email || "";
-    return NextResponse.json({
-      id: s.id,
-      email,
-      status: s.status,
-      paid: s.payment_status === "paid",
-      metadata: s.metadata || {},
-    });
-  } catch (e:any) {
-    return NextResponse.json({ error: e.message }, { status: 400 });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2024-06-20",
+});
+
+export async function GET(
+  _req: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = params?.id;
+  if (!id) {
+    return NextResponse.json({ error: "Missing session id" }, { status: 400 });
   }
+
+  const session = await stripe.checkout.sessions.retrieve(id);
+  return NextResponse.json(session);
 }
