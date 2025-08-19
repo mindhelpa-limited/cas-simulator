@@ -1,28 +1,40 @@
-import { NextResponse } from "next/server";
+// app/api/checkout/session/route.ts
 import Stripe from "stripe";
+import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20",
-});
-
-type CreateSessionInput = {
-  priceId: string;
-  mode: "subscription" | "payment";
-  successUrl: string;
-  cancelUrl: string;
-  metadata?: Record<string, string>;
-};
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!); // ← no apiVersion
 
 export async function POST(req: Request) {
-  const body = (await req.json()) as CreateSessionInput;
+  try {
+    const { priceId, customerEmail, successUrl, cancelUrl, metadata } = await req.json();
 
-  const session = await stripe.checkout.sessions.create({
-    mode: body.mode,
-    line_items: [{ price: body.priceId, quantity: 1 }],
-    success_url: body.successUrl,
-    cancel_url: body.cancelUrl,
-    metadata: body.metadata,
-  });
+    if (!priceId) {
+      return NextResponse.json({ error: "Missing priceId" }, { status: 400 });
+    }
 
-  return NextResponse.json({ id: session.id });
+    const origin =
+      (await headers()).get("origin") ??
+      process.env.NEXT_PUBLIC_BASE_URL ??
+      "http://localhost:3000";
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      line_items: [{ price: priceId, quantity: 1 }],
+      allow_promotion_codes: true,
+      customer_email: customerEmail,
+      success_url:
+        successUrl ?? `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: cancelUrl ?? `${origin}/pricing?canceled=1`,
+      metadata: metadata ?? {},
+    });
+
+    return NextResponse.json({ id: session.id, url: session.url });
+  } catch (err: any) {
+    console.error("create session error", err);
+    return NextResponse.json(
+      { error: err.message ?? "Unexpected error" },
+      { status: 500 },
+    );
+  }
 }
