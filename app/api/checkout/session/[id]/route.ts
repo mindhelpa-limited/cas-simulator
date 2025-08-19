@@ -1,15 +1,10 @@
-import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!); // ← no apiVersion
 
-export async function GET(req: Request) {
-  // Extract the dynamic [id] from the request URL
-  const pathname = new URL(req.url).pathname; // e.g. /api/checkout/session/cs_test_123
-  const id = decodeURIComponent(pathname.split("/").pop() || "");
-
+export async function GET(_req: Request, { params }: any) {
+  const id = params?.id as string | undefined;
   if (!id) {
     return NextResponse.json({ error: "Missing session id" }, { status: 400 });
   }
@@ -17,10 +12,7 @@ export async function GET(req: Request) {
   try {
     const session = await stripe.checkout.sessions.retrieve(id);
     return NextResponse.json(session);
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err?.message ?? "Failed to retrieve session" },
-      { status: 500 }
-    );
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message ?? "Stripe error" }, { status: 500 });
   }
 }
