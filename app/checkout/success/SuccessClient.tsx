@@ -1,11 +1,15 @@
+// app/checkout/success/SuccessClient.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { auth } from "@/lib/firebaseClient";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
-export default function SuccessPage() {
+export default function SuccessClient() {
   const search = useSearchParams();
   const sessionId = search.get("session_id") || "";
 
@@ -23,9 +27,12 @@ export default function SuccessPage() {
         const s = await r.json();
         if (!s.paid) throw new Error("Payment not completed");
         setEmail(s.email);
-        setPlan({ product: s.metadata?.product, durationDays: Number(s.metadata?.durationDays || 0) });
+        setPlan({
+          product: s.metadata?.product,
+          durationDays: Number(s.metadata?.durationDays || 0),
+        });
       } catch (e: any) {
-        setErr(e.message);
+        setErr(e.message ?? "Unable to verify payment.");
       } finally {
         setLoading(false);
       }
@@ -41,7 +48,7 @@ export default function SuccessPage() {
       try {
         await createUserWithEmailAndPassword(auth, email, password);
       } catch (e: any) {
-        if (e.code === "auth/email-already-in-use") {
+        if (e?.code === "auth/email-already-in-use") {
           await signInWithEmailAndPassword(auth, email, password);
         } else {
           throw e;
@@ -51,7 +58,10 @@ export default function SuccessPage() {
       const idToken = await auth.currentUser!.getIdToken();
       const res = await fetch("/api/entitlements/claim", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${idToken}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
         body: JSON.stringify({ session_id: sessionId }),
       });
       const data = await res.json();
@@ -59,7 +69,7 @@ export default function SuccessPage() {
 
       window.location.href = "/dashboard";
     } catch (e: any) {
-      setErr(e.message);
+      setErr(e.message ?? "Could not finish sign up.");
     }
   };
 
@@ -77,8 +87,13 @@ export default function SuccessPage() {
 
         <div className="mt-6">
           <label className="text-sm text-gray-400">Email (from Stripe)</label>
-          <input className="w-full mt-1 p-3 rounded bg-gray-800 border border-gray-700" value={email} disabled />
+          <input
+            className="w-full mt-1 p-3 rounded bg-gray-800 border border-gray-700"
+            value={email}
+            disabled
+          />
         </div>
+
         <div className="mt-4">
           <label className="text-sm text-gray-400">Set password</label>
           <input
