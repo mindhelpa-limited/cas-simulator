@@ -2,11 +2,29 @@
 
 import { useEffect, useState, useRef } from 'react';
 
-type Scenario = { 
-  id: string; 
-  title: string;        
-  scenario: string;     
-  tags: string[] 
+/** ---- Web Speech API typing shim (build-safe for Vercel) ---- */
+type SpeechRecognition = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  start(): void;
+  stop(): void;
+  onresult: (e: any) => void;
+  onend: () => void;
+};
+declare global {
+  interface Window {
+    SpeechRecognition?: new () => SpeechRecognition;
+    webkitSpeechRecognition?: new () => SpeechRecognition;
+  }
+}
+/** ----------------------------------------------------------- */
+
+type Scenario = {
+  id: string;
+  title: string;
+  scenario: string;
+  tags: string[];
 };
 
 type Feedback = {
@@ -40,13 +58,15 @@ export default function TestMode() {
       {
         id: 'abdomen-pain',
         title: 'Abdominal Pain in Young Adult',
-        scenario: 'A 24-year-old presents with lower abdominal pain and low-grade fever for two days. Take a focused history, show empathy, explore ICE, and outline a safe initial plan.',
+        scenario:
+          'A 24-year-old presents with lower abdominal pain and low-grade fever for two days. Take a focused history, show empathy, explore ICE, and outline a safe initial plan.',
         tags: ['History', 'Reasoning'],
       },
       {
         id: 'sore-throat',
         title: 'Sore Throat with Fever',
-        scenario: 'A 30-year-old has sore throat, fever, and difficulty swallowing for three days. Explore red flags, assess ICE, and provide safety netting.',
+        scenario:
+          'A 30-year-old has sore throat, fever, and difficulty swallowing for three days. Explore red flags, assess ICE, and provide safety netting.',
         tags: ['ENT', 'Safety-netting'],
       },
     ];
@@ -54,7 +74,7 @@ export default function TestMode() {
     setActive(list[0]);
   }, []);
 
-  /** Load Google UK English Female voice */
+  /** Load Google UK English voice */
   useEffect(() => {
     const load = () => {
       const voices = window.speechSynthesis.getVoices();
@@ -84,14 +104,16 @@ export default function TestMode() {
 
   /** STT setup */
   useEffect(() => {
-    // @ts-ignore
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SR =
+      (typeof window !== 'undefined' && window.SpeechRecognition) ||
+      (typeof window !== 'undefined' && window.webkitSpeechRecognition);
     if (!SR) return;
-    const rec = new SR();
+
+    const rec: SpeechRecognition = new SR();
     rec.continuous = true;
     rec.interimResults = true;
     rec.lang = 'en-GB';
-    rec.onresult = (e: SpeechRecognitionEvent) => {
+    rec.onresult = (e: any) => {
       let text = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
         text += e.results[i][0].transcript;
@@ -103,7 +125,10 @@ export default function TestMode() {
   }, []);
 
   const startRec = () => {
-    if (!recognitionRef.current) { alert('Speech recognition not supported. Use Chrome.'); return; }
+    if (!recognitionRef.current) {
+      alert('Speech recognition not supported. Use Chrome.');
+      return;
+    }
     setTranscript('');
     recognitionRef.current.start();
     setIsRecording(true);
@@ -115,7 +140,8 @@ export default function TestMode() {
     if (!active) return;
     const answer = transcript.trim();
     if (!answer) return alert('Say something first!');
-    setLoading(true); setFeedback(null);
+    setLoading(true);
+    setFeedback(null);
     try {
       const res = await fetch('/api/test-mode/evaluate', {
         method: 'POST',
@@ -142,7 +168,9 @@ export default function TestMode() {
               <p className="mt-2 text-gray-300">{active.scenario}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {active.tags.map((tag, i) => (
-                  <span key={i} className="px-3 py-1 text-sm bg-gray-800 rounded-full">{tag}</span>
+                  <span key={i} className="px-3 py-1 text-sm bg-gray-800 rounded-full">
+                    {tag}
+                  </span>
                 ))}
               </div>
             </div>
@@ -157,17 +185,11 @@ export default function TestMode() {
                 🔊 Play Scenario
               </button>
               {!isRecording ? (
-                <button
-                  onClick={startRec}
-                  className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700"
-                >
+                <button onClick={startRec} className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700">
                   🎙 Start Recording
                 </button>
               ) : (
-                <button
-                  onClick={stopRec}
-                  className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700"
-                >
+                <button onClick={stopRec} className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700">
                   ⏹ Stop Recording
                 </button>
               )}
@@ -186,9 +208,7 @@ export default function TestMode() {
               onClick={evaluate}
               disabled={loading || !transcript}
               className={`w-full py-3 rounded-lg font-semibold ${
-                loading || !transcript
-                  ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                  : 'bg-purple-600 hover:bg-purple-700'
+                loading || !transcript ? 'bg-gray-700 text-gray-400 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'
               }`}
             >
               {loading ? 'Scoring…' : '✅ Get Feedback'}
@@ -198,19 +218,25 @@ export default function TestMode() {
             {feedback && (
               <div className="mt-6 p-5 border border-gray-700 rounded-xl bg-gray-800">
                 <h3 className="text-lg font-semibold mb-2">Feedback</h3>
-                <p className="text-gray-300">Overall: <strong>{feedback.overall}%</strong></p>
+                <p className="text-gray-300">
+                  Overall: <strong>{feedback.overall}%</strong>
+                </p>
                 <p className="mt-2">{feedback.summary}</p>
                 <div className="mt-4 grid grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-semibold">✔ Strengths</h4>
                     <ul className="list-disc list-inside text-gray-300">
-                      {feedback.strengths.map((s, i) => <li key={i}>{s}</li>)}
+                      {feedback.strengths.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
                     </ul>
                   </div>
                   <div>
                     <h4 className="font-semibold">➤ Improvements</h4>
                     <ul className="list-disc list-inside text-gray-300">
-                      {feedback.improvements.map((s, i) => <li key={i}>{s}</li>)}
+                      {feedback.improvements.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -221,9 +247,4 @@ export default function TestMode() {
       </div>
     </main>
   );
-}
-
-/** Vendor-prefixed types */
-declare global {
-  interface Window { webkitSpeechRecognition?: any; SpeechRecognition?: any; }
 }
