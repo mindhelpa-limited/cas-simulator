@@ -1,24 +1,27 @@
-import { getApps, initializeApp, cert, applicationDefault } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+// lib/firebaseAdmin.ts
+import { getApps, initializeApp, cert, App } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
-function getCred() {
-  // Prefer full JSON in FIREBASE_SERVICE_ACCOUNT
-  const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
-  if (raw) {
-    try {
-      return cert(JSON.parse(raw));
-    } catch {
-      // If someone pasted a base64 string or something else, fall back:
-      try { return cert(JSON.parse(Buffer.from(raw, "base64").toString("utf8"))); }
-      catch { /* ignore */ }
-    }
+let app: App | undefined;
+
+export function initAdmin() {
+  if (!getApps().length) {
+    const raw = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+    if (!raw) throw new Error("FIREBASE_SERVICE_ACCOUNT_KEY is missing");
+
+    const json =
+      raw.trim().startsWith("{")
+        ? raw
+        : Buffer.from(raw, "base64").toString("utf8");
+
+    const serviceAccount = JSON.parse(json);
+    app = initializeApp({ credential: cert(serviceAccount) });
+  } else {
+    app = getApps()[0]!;
   }
-  // Fallback to ADC if running on GCP
-  return applicationDefault();
+  return app!;
 }
 
-const app = getApps().length ? getApps()[0] : initializeApp({ credential: getCred() });
-
-export const adminAuth = getAuth(app);
-export const adminDb = getFirestore(app);
+export function getDb() {
+  return getFirestore(initAdmin());
+}
