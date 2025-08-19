@@ -1,36 +1,28 @@
-import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
-import { PLANS, type PlanId } from "@/lib/plans";
+import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
-export async function POST(req: NextRequest) {
-  try {
-    const { planId } = await req.json() as { planId: PlanId };
-    const plan = PLANS[planId];
-    if (!plan) return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2024-06-20",
+});
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      customer_creation: "always",
-      allow_promotion_codes: true,
-      line_items: [{
-        price_data: {
-          currency: "gbp",
-          product_data: { name: plan.checkoutName },
-          unit_amount: plan.amountPence,
-        },
-        quantity: 1,
-      }],
-      metadata: {
-        planId: plan.id,
-        product: plan.product,
-        durationDays: String(plan.durationDays),
-      },
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/pricing?canceled=1`,
-    });
+type CreateSessionInput = {
+  priceId: string;
+  mode: "subscription" | "payment";
+  successUrl: string;
+  cancelUrl: string;
+  metadata?: Record<string, string>;
+};
 
-    return NextResponse.json({ url: session.url });
-  } catch (e:any) {
-    return NextResponse.json({ error: e.message || "Stripe error" }, { status: 500 });
-  }
+export async function POST(req: Request) {
+  const body = (await req.json()) as CreateSessionInput;
+
+  const session = await stripe.checkout.sessions.create({
+    mode: body.mode,
+    line_items: [{ price: body.priceId, quantity: 1 }],
+    success_url: body.successUrl,
+    cancel_url: body.cancelUrl,
+    metadata: body.metadata,
+  });
+
+  return NextResponse.json({ id: session.id });
 }
