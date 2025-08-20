@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 // Durations
-const MORNING_STATION_SEC = 11 * 60 + 10;   // 11m10s
-const AFTERNOON_STATION_SEC = 8 * 60 + 40;  // 8m40s
+const MORNING_STATION_SEC = 11 * 60 + 10;
+const AFTERNOON_STATION_SEC = 8 * 60 + 40;
 
 type RawStation = { title: string; scenario: string; tags: string[] };
 type Station = RawStation & {
@@ -32,7 +32,7 @@ function fallbackStations(): Station[] {
     {
       title: "Acute Chest Pain in Middle-Aged Adult",
       scenario:
-        "A 56-year-old presents with central chest pain radiating to the left arm. Take focused history, assess red flags, immediate management and safety netting.",
+      "A 56-year-old presents with central chest pain radiating to the left arm. Take focused history, assess red flags, immediate management and safety netting.",
       tags: ["Cardiology", "Emergency", "ACS"],
     },
     {
@@ -200,8 +200,8 @@ export async function POST() {
         breakSec: 30 * 60,
         afternoon: { stations: 8, perStationSec: AFTERNOON_STATION_SEC },
         totals: {
-          performanceSec: 158 * 60 + 30, // 158m30s
-          examSec: 188 * 60 + 30,        // includes 30m break
+          performanceSec: 158 * 60 + 30,
+          examSec: 188 * 60 + 30,
         },
       },
     });

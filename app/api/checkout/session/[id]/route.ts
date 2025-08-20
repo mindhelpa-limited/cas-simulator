@@ -2,16 +2,24 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" });
+export const runtime = "nodejs"; // required for Stripe in App Router
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
-  const id = params?.id;
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+// 👇 NEXT EXPECTS: params is a Promise<{ id: string }>
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params; // <- await the promise
+
   if (!id) {
     return NextResponse.json({ error: "Missing session id" }, { status: 400 });
   }
 
   try {
     const session = await stripe.checkout.sessions.retrieve(id);
+
     return NextResponse.json({
       id: session.id,
       paid: session.payment_status === "paid",
@@ -19,6 +27,9 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
       metadata: session.metadata ?? {},
     });
   } catch (e: any) {
-    return NextResponse.json({ error: e.message ?? "Stripe error" }, { status: 500 });
+    return NextResponse.json(
+      { error: e?.message ?? "Stripe error" },
+      { status: 500 }
+    );
   }
 }

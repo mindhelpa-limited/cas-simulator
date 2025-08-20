@@ -1,106 +1,82 @@
 // app/api/live-mode/reply/route.ts
 import { NextResponse } from "next/server";
+import OpenAI from "openai";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
-type Turn = { role: "user" | "assistant"; content: string };
+export const runtime = "nodejs";           // safer for OpenAI + Upstash
+export const dynamic = "force-dynamic";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+
+// Upstash Redis client (REST)
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+// 1 request per 10 seconds per key (here: by IP)
+// You can tweak the number and window to your needs.
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(1, "10 s"),
+  analytics: true,
+  prefix: "rl:live-mode-reply",
+});
 
 export async function POST(req: Request) {
   try {
-    const { scenario, history, interrupt } = (await req.json()) as {
-      scenario: string;
-      history: Turn[];
-      interrupt?: boolean;
-    };
+    // use IP if available, otherwise a generic key
+    const ip =
+      (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() ||
+      req.headers.get("x-real-ip") ||
+      "anonymous";
 
-    const messages: Array<{ role: "system" | "user" | "assistant"; content: string }> = [
+    const { success } = await ratelimit.limit(ip);
+    if (!success) {
+      return NextResponse.json({ error: "Ratelimit exceeded" }, { status: 429 });
+    }
+
+    const formData = await req.formData();
+    const scenario = formData.get("scenario") as string | null;
+    const audio = formData.get("audio") as File | null;
+    const historyString = (formData.get("history") as string | null) ?? "[]";
+    const history = JSON.parse(historyString);
+
+    if (!scenario || !audio) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    // 1) Transcribe user's audio
+    const transcription = await openai.audio.transcriptions.create({
+      file: audio,
+      model: "whisper-1",
+      language: "en",
+    });
+    const doctorText = transcription.text;
+
+    // 2) Generate patient reply
+    const messages = [
       {
         role: "system",
         content:
-          [
-            "You are a standardized patient in a CAS OSCE-style station.",
-            "Stay in character as the PATIENT. Be concise (1–2 sentences per turn).",
-            "Let the doctor lead; answer naturally and truthfully based on the scenario.",
-            "Only provide information if asked or if appropriate. Allow pauses.",
-            "You can ask short clarifying questions (e.g., 'What do you mean by that?').",
-            "If the doctor interrupts, stop and let them speak.",
-            "Tone: human, cooperative, realistic. No meta talk. Do not output 'DOCTOR:' or 'PATIENT:' labels.",
-          ].join(" "),
+          "You are a realistic patient in a UK medical exam. Keep responses concise and realistic based on the provided scenario. Do not offer unsolicited info. Respond naturally to the doctor's questions.",
       },
-      {
-        role: "user",
-        content:
-          "Station briefing for the patient (do not read this aloud; just use it as your backstory):\n" +
-          scenario,
-      },
+      ...history,
+      { role: "user", content: doctorText },
     ];
 
-    // Add the conversation history
-    for (const t of history ?? []) {
-      messages.push({
-        role: t.role === "user" ? "user" : "assistant",
-        content: t.content,
-      });
-    }
-
-    // Brief nudge if we are handling a barge-in/interrupt
-    if (interrupt) {
-      messages.push({
-        role: "system",
-        content:
-          "The doctor interrupted you. Resume with a short, natural reply in 1–2 sentences.",
-      });
-    }
-
-    // Call OpenAI
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      // Safe fallback if key is missing
-      return NextResponse.json({
-        reply:
-          "Hello doctor. I'm not feeling very well and I’m hoping you can help.",
-        note: "OPENAI_API_KEY missing on server; returned fallback line.",
-      });
-    }
-
-    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        temperature: 0.8,
-        max_tokens: 180,
-        messages,
-      }),
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: messages as any,
+      temperature: 0.8,
+      stream: false,
     });
 
-    if (!openaiRes.ok) {
-      const errText = await openaiRes.text();
-      console.error("OpenAI error:", errText);
-      return NextResponse.json({
-        reply:
-          "Hello doctor. Sorry—could you please say that again?",
-        error: "OpenAI request failed",
-      });
-    }
-
-    const data = await openaiRes.json();
-    const reply = data?.choices?.[0]?.message?.content?.trim();
-    if (!reply) {
-      return NextResponse.json({
-        reply: "Hello doctor. I’m here.",
-        note: "No content in OpenAI response; returned fallback line.",
-      });
-    }
-
-    return NextResponse.json({ reply });
-  } catch (e: any) {
-    console.error("reply route error:", e);
-    // Always return something to keep the flow going
-    return NextResponse.json({
-      reply: "Hello doctor. I’m listening.",
-      error: e?.message ?? "Unexpected error",
-    });
+    const reply = completion.choices[0].message.content;
+    return NextResponse.json({ doctorText, reply });
+  } catch (error) {
+    console.error("Error in reply route:", error);
+    return NextResponse.json({ error: "Failed to process request" }, { status: 500 });
   }
 }
