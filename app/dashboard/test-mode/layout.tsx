@@ -1,20 +1,24 @@
 "use client";
-import { ReactNode } from "react";
-import { useEntitlements } from "@/hooks/useEntitlements";
 
-export default function TestModeGate({ children }: { children: ReactNode }) {
+import { ReactNode } from "react";
+import useEntitlements from "@/hooks/useEntitlements";
+
+export default function TestModeLayout({ children }: { children: ReactNode }) {
   const { loading, hasTest } = useEntitlements();
 
   if (loading) return <main className="p-8 text-white">Checking access…</main>;
   if (!hasTest) return <Paywall kind="test" />;
+
   return <>{children}</>;
 }
 
 function Paywall({ kind }: { kind: "test" | "live" }) {
   const title = kind === "test" ? "Practice Mode is locked" : "Live Mode is locked";
-  const copy  = kind === "test"
-    ? "Your account doesn’t include Practice Mode. Purchase a Practice plan to continue."
-    : "Your account doesn’t include Live Mode. Purchase a Live plan to continue.";
+  const copy =
+    kind === "test"
+      ? "Your account doesn’t include Practice Mode. Purchase a Practice plan to continue."
+      : "Your account doesn’t include Live Mode. Purchase a Live plan to continue.";
+
   return (
     <main className="min-h-screen bg-gray-950 text-gray-100 p-8">
       <div className="max-w-lg mx-auto bg-gray-900 border border-gray-800 rounded-2xl p-6">

@@ -1,31 +1,118 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Your custom CSS */
-* {
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f5f8ff;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
+  color: #1f2937;
+  font-weight: 300;
+}
+
+/* Headings styles based on the Tabulio design */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* ✅ FORM STYLES ONLY — no heading overrides */
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 15px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  background-color: #0a0a0a; /* dark background */
-  color: #f5f5f5;            /* light text */
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.5;
+/*
+  Custom keyframes for animations.
+  These need to be globally defined to be accessible by Tailwind classes.
+*/
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-main {
-  padding: 2rem;
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-a {
-  color: #38bdf8; /* Tailwind cyan-400 */
-  text-decoration: none;
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-a:hover {
-  text-decoration: underline;
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-bg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradient-slow-pulse {
+  0%, 100% { background-size: 200% 200%; background-position: 0% 50%; }
+  50% { background-size: 200% 200%; background-position: 100% 50%; }
+}
+
+/*
+  Custom animation classes. These apply the keyframes defined above.
+  The `forwards` keyword ensures the element stays at its final animated state.
+*/
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in-up.delay-200 { animation-delay: 0.2s; }
+.animate-fade-in-up.delay-400 { animation-delay: 0.4s; }
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.8s ease-out forwards;
+}
+
+.animate-fade-in-down.delay-200 { animation-delay: 0.2s; }
+
+.animate-scale-in {
+  animation: scale-in 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+.animate-pulse-bg {
+  background-size: 200% 200%;
+  animation: pulse-bg 10s ease-in-out infinite;
+}
+
+.animate-gradient-slow-pulse {
+  animation: gradient-slow-pulse 10s ease-in-out infinite;
 }

@@ -1,45 +1,55 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, onSnapshot } from "firebase/firestore";
-import { auth, db } from "@/lib/firebaseClient";
+import { auth } from "@/lib/firebaseClient";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-type Entitlements =
-  | { testMode?: { expiresAt: number; source?: string }; liveMode?: { expiresAt: number; source?: string } }
-  | undefined;
+export type EntitlementState = {
+  loading: boolean;
+  hasTest: boolean;
+  hasLive: boolean;
+  expires?: { test?: number; live?: number };
+};
 
-export function useEntitlements() {
-  const [uid, setUid] = useState<string | null>(null);
-  const [ent, setEnt] = useState<Entitlements>(undefined);
-  const [loading, setLoading] = useState(true);
+export default function useEntitlements(): EntitlementState {
+  const [state, setState] = useState<EntitlementState>({
+    loading: true,
+    hasTest: false,
+    hasLive: false,
+  });
 
-  // Watch auth
   useEffect(() => {
-    const off = onAuthStateChanged(auth, (u) => setUid(u?.uid ?? null));
-    return () => off();
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        setState({ loading: false, hasTest: false, hasLive: false });
+        return;
+      }
+      try {
+        const db = getFirestore();
+        const [testSnap, liveSnap] = await Promise.all([
+          getDoc(doc(db, "users", user.uid, "entitlements", "test")),
+          getDoc(doc(db, "users", user.uid, "entitlements", "live")),
+        ]);
+        const now = Date.now();
+        const testExp = testSnap.exists() ? Number((testSnap.data() as any).expiresAt) : 0;
+        const liveExp = liveSnap.exists() ? Number((liveSnap.data() as any).expiresAt) : 0;
+
+        setState({
+          loading: false,
+          hasTest: !!testExp && testExp > now,
+          hasLive: !!liveExp && liveExp > now,
+          expires: {
+            test: testExp || undefined,
+            live: liveExp || undefined,
+          },
+        });
+      } catch {
+        setState({ loading: false, hasTest: false, hasLive: false });
+      }
+    });
+    return () => unsub();
   }, []);
 
-  // Watch user's document
-  useEffect(() => {
-    if (!uid) { setEnt(undefined); setLoading(false); return; }
-    setLoading(true);
-    const ref = doc(db, "users", uid);
-    const off = onSnapshot(
-      ref,
-      (snap) => {
-        const data = snap.data() as any;
-        setEnt(data?.entitlements);
-        setLoading(false);
-      },
-      () => setLoading(false)
-    );
-    return () => off();
-  }, [uid]);
-
-  const now = Date.now();
-  const hasTest = !!ent?.testMode?.expiresAt && ent!.testMode!.expiresAt > now;
-  const hasLive = !!ent?.liveMode?.expiresAt && ent!.liveMode!.expiresAt > now;
-
-  return { loading, uid, entitlements: ent, hasTest, hasLive };
+  return state;
 }
