@@ -1,8 +1,9 @@
-// app/dashboard/live-mode/page.tsx
 "use client";
+
+// --- Imports ---
 import { useEffect, useRef, useState } from "react";
 
-/* ---------- Types ---------- */
+// --- Type Definitions ---
 type Circuit = "morning" | "afternoon";
 type Station = {
   id: string;
@@ -31,7 +32,7 @@ type Feedback = {
 };
 type Turn = { role: "user" | "assistant"; content: string };
 
-/* ---------- Utils ---------- */
+// --- Constants and Utility Functions ---
 const READING_SEC = 60;
 const DEFAULT_SCHEDULE: Schedule = {
   morning: { stations: 8, perStationSec: 11 * 60 + 10 },
@@ -45,16 +46,16 @@ const mmss = (s: number) => `${pad2(Math.floor(s / 60))}:${pad2(s % 60)}`;
 const playAudio = async (text: string, onStart: () => void, onStop: () => void) => {
   try {
     onStart();
-    const response = await fetch('/api/live-mode/generate-speech', {
-      method: 'POST',
+    const response = await fetch("/api/live-mode/generate-speech", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ text }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch audio from server');
+      throw new Error("Failed to fetch audio from server");
     }
 
     const audioBlob = await response.blob();
@@ -79,8 +80,9 @@ const playAudio = async (text: string, onStart: () => void, onStop: () => void) 
   }
 };
 
-/* ---------- Page ---------- */
+// --- Main Component ---
 export default function LiveModePage() {
+  // --- State Variables ---
   const [stations, setStations] = useState<Station[]>([]);
   const [schedule, setSchedule] = useState<Schedule>(DEFAULT_SCHEDULE);
   const [mode, setMode] = useState<"idle" | "station" | "break" | "finished">("idle");
@@ -93,137 +95,18 @@ export default function LiveModePage() {
   const [convos, setConvos] = useState<Record<number, Turn[]>>({});
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState<Record<string, Feedback>>({});
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
-  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [patientSpeaking, setPatientSpeaking] = useState(false);
   const [micReady, setMicReady] = useState<null | boolean>(null);
   const [lastError, setLastError] = useState<string | null>(null);
   const [lastPatientLine, setLastPatientLine] = useState<string>("");
   const [doctorSpeech, setDoctorSpeech] = useState<string>("");
 
-  /* ---------- Start exam ---------- */
-  const startExam = async () => {
-    setBusy(true);
-    setLastError(null);
-    try {
-      try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
-        setMicReady(true);
-      } catch (e: any) {
-        setMicReady(false);
-        setLastError("Microphone permission blocked. Please allow mic access.");
-      }
-      const r = await fetch("/api/live-mode/generate", { method: "POST" });
-      const data = await r.json();
-      let genStations: Station[] = data?.stations ?? [];
-      if (!genStations.length) throw new Error("No stations returned from /api/live-mode/generate");
-      const sched: Schedule = data?.schedule ?? DEFAULT_SCHEDULE;
-      setSchedule(sched);
-      genStations = genStations.map((s: Station, i: number) => {
-        const inMorning = i < sched.morning.stations;
-        const perSec = inMorning ? sched.morning.perStationSec : sched.afternoon.perStationSec;
-        return {
-          ...s,
-          circuit: s.circuit ?? (inMorning ? "morning" : "afternoon"),
-          durationSec: s.durationSec ?? perSec,
-        };
-      });
-      setStations(genStations);
-      setCurrent(0);
-      setPhase("reading");
-      setReadingLeft(READING_SEC);
-      setRoleplayLeft(Math.max((genStations[0].durationSec ?? 0) - READING_SEC, 60));
-      setBreakLeft(sched.breakSec);
-      setConvos({ 0: [] });
-      setMode("station");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (e: any) {
-      console.error(e);
-      setLastError(e?.message || String(e));
-      alert("Could not start the exam. Check that /api/live-mode/reply works and OPENAI_API_KEY is set.");
-    } finally {
-      setBusy(false);
-    }
-  };
+  // --- Refs ---
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /* ---------- Timers ---------- */
-  useEffect(() => {
-    if (mode !== "station" || phase !== "reading") return;
-    const t = setInterval(() => {
-      setReadingLeft((p) => {
-        if (p <= 1) {
-          clearInterval(t);
-          beginRoleplay();
-          return 0;
-        }
-        return p - 1;
-      });
-    }, 1000);
-    return () => clearInterval(t);
-  }, [mode, phase, current, stations]);
-
-  useEffect(() => {
-    if (mode !== "station" || phase !== "roleplay") return;
-    const t = setInterval(() => {
-      setRoleplayLeft((p) => {
-        if (p <= 1) {
-          clearInterval(t);
-          stopAudioRecorder();
-          setPatientSpeaking(false);
-          handleAutoAdvance();
-          return 0;
-        }
-        return p - 1;
-      });
-    }, 1000);
-    return () => clearInterval(t);
-  }, [mode, phase]);
-
-  useEffect(() => {
-    if (mode !== "break") return;
-    const t = setInterval(() => {
-      setBreakLeft((p) => {
-        if (p <= 1) {
-          clearInterval(t);
-          goToStation(schedule.morning.stations);
-          setMode("station");
-          setPhase("reading");
-          return 0;
-        }
-        return p - 1;
-      });
-    }, 1000);
-    return () => clearInterval(t);
-  }, [mode, schedule]);
-
-  /* ---------- Role-play ---------- */
-  const beginRoleplay = async () => {
-    setPhase("roleplay");
-    startAudioRecorder();
-    try {
-      const opening = await fetchPatientReply(stations[current], []);
-      const line = (opening || "").trim() || "Hello doctor. How can I help?";
-      setLastPatientLine(line);
-      setConvos((m) => ({ ...m, [current]: [{ role: "assistant", content: line }] }));
-      await playAudio(
-        line,
-        () => setPatientSpeaking(true),
-        () => setPatientSpeaking(false)
-      );
-    } catch (e: any) {
-      console.error("Opening reply error:", e);
-      setLastError(e?.message || String(e));
-      const fallback = "Hello doctor. I’m here.";
-      setLastPatientLine(fallback);
-      await playAudio(
-        fallback,
-        () => setPatientSpeaking(true),
-        () => setPatientSpeaking(false)
-      );
-    }
-  };
-
+  // --- API Functions ---
   const fetchPatientReply = async (st: Station, history: Turn[], audioBlob?: Blob) => {
     const formData = new FormData();
     formData.append("scenario", `Title: ${st.title}\n${st.scenario}`);
@@ -241,13 +124,10 @@ export default function LiveModePage() {
       throw new Error("reply API failed");
     }
     const data = await res.json();
-    if (data.doctorText) {
-      setDoctorSpeech(data.doctorText);
-    }
-    return (data.reply as string) || "…";
+    return { doctorText: data.doctorText, reply: data.reply };
   };
 
-  /* ---------- Audio Recorder (Replaces Recognizer) ---------- */
+  // --- Audio Recorder Logic ---
   const startAudioRecorder = async () => {
     if (mediaRecorderRef.current) return;
     setLastError(null);
@@ -320,12 +200,14 @@ export default function LiveModePage() {
     const prev = convos[current] ?? [];
     
     try {
-      const reply = await fetchPatientReply(stations[current], prev, audioBlob);
+      const { doctorText, reply } = await fetchPatientReply(stations[current], prev, audioBlob);
       const line = (reply || "").trim() || "Okay, I understand.";
+      
+      setDoctorSpeech(doctorText);
       setLastPatientLine(line);
 
       const history = prev.concat([
-        { role: "user", content: doctorSpeech },
+        { role: "user", content: doctorText },
         { role: "assistant", content: line }
       ]);
       setConvos((m) => ({ ...m, [current]: history }));
@@ -346,7 +228,77 @@ export default function LiveModePage() {
     }
   };
 
-  /* ---------- Navigation ---------- */
+  // --- Exam Flow & Navigation ---
+  const startExam = async () => {
+    setBusy(true);
+    setLastError(null);
+    try {
+      try {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+        setMicReady(true);
+      } catch (e: any) {
+        setMicReady(false);
+        setLastError("Microphone permission blocked. Please allow mic access.");
+      }
+      const r = await fetch("/api/live-mode/generate", { method: "POST" });
+      const data = await r.json();
+      let genStations: Station[] = data?.stations ?? [];
+      if (!genStations.length) throw new Error("No stations returned from /api/live-mode/generate");
+      const sched: Schedule = data?.schedule ?? DEFAULT_SCHEDULE;
+      setSchedule(sched);
+      genStations = genStations.map((s: Station, i: number) => {
+        const inMorning = i < sched.morning.stations;
+        const perSec = inMorning ? sched.morning.perStationSec : sched.afternoon.perStationSec;
+        return {
+          ...s,
+          circuit: s.circuit ?? (inMorning ? "morning" : "afternoon"),
+          durationSec: s.durationSec ?? perSec,
+        };
+      });
+      setStations(genStations);
+      setCurrent(0);
+      setPhase("reading");
+      setReadingLeft(READING_SEC);
+      setRoleplayLeft(Math.max((genStations[0].durationSec ?? 0) - READING_SEC, 60));
+      setBreakLeft(sched.breakSec);
+      setConvos({ 0: [] });
+      setMode("station");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e: any) {
+      console.error(e);
+      setLastError(e?.message || String(e));
+      alert("Could not start the exam. Check that /api/live-mode/reply works and OPENAI_API_KEY is set.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const beginRoleplay = async () => {
+    setPhase("roleplay");
+    startAudioRecorder();
+    try {
+      const { reply: openingReply } = await fetchPatientReply(stations[current], []);
+      const line = (openingReply || "").trim() || "Hello doctor. How can I help?";
+      setLastPatientLine(line);
+      setConvos((m) => ({ ...m, [current]: [{ role: "assistant", content: line }] }));
+      await playAudio(
+        line,
+        () => setPatientSpeaking(true),
+        () => setPatientSpeaking(false)
+      );
+    } catch (e: any) {
+      console.error("Opening reply error:", e);
+      setLastError(e?.message || String(e));
+      const fallback = "Hello doctor. I’m here.";
+      setLastPatientLine(fallback);
+      await playAudio(
+        fallback,
+        () => setPatientSpeaking(true),
+        () => setPatientSpeaking(false)
+      );
+    }
+  };
+
   const goToStation = (i: number) => {
     const st = stations[i];
     if (!st) return;
@@ -359,6 +311,7 @@ export default function LiveModePage() {
     setRoleplayLeft(rp);
     setConvos((m) => (m[i] ? m : { ...m, [i]: [] }));
   };
+  
   const handleAutoAdvance = () => {
     if (current === schedule.morning.stations - 1) {
       countdownThen(() => setMode("break"));
@@ -368,6 +321,7 @@ export default function LiveModePage() {
       countdownThen(() => setMode("finished"));
     }
   };
+  
   const countdownThen = (done: () => void) => {
     setOverlay({ kind: "next", n: 3 });
     const i = setInterval(() => {
@@ -383,7 +337,56 @@ export default function LiveModePage() {
     }, 1000);
   };
 
-  /* ---------- Scoring ---------- */
+  // --- Effects (Timers & Scoring) ---
+  useEffect(() => {
+    if (mode !== "station" || phase !== "reading") return;
+    const t = setInterval(() => {
+      setReadingLeft((p) => {
+        if (p <= 1) {
+          clearInterval(t);
+          beginRoleplay();
+          return 0;
+        }
+        return p - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [mode, phase, current, stations]);
+
+  useEffect(() => {
+    if (mode !== "station" || phase !== "roleplay") return;
+    const t = setInterval(() => {
+      setRoleplayLeft((p) => {
+        if (p <= 1) {
+          clearInterval(t);
+          stopAudioRecorder();
+          setPatientSpeaking(false);
+          handleAutoAdvance();
+          return 0;
+        }
+        return p - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [mode, phase]);
+
+  useEffect(() => {
+    if (mode !== "break") return;
+    const t = setInterval(() => {
+      setBreakLeft((p) => {
+        if (p <= 1) {
+          clearInterval(t);
+          goToStation(schedule.morning.stations);
+          setMode("station");
+          setPhase("reading");
+          return 0;
+        }
+        return p - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [mode, schedule]);
+
   useEffect(() => {
     const scoreAll = async () => {
       setBusy(true);
@@ -413,25 +416,25 @@ export default function LiveModePage() {
     if (mode === "finished") scoreAll();
   }, [mode, stations, convos]);
 
-  /* ---------- Render ---------- */
+  // --- Render Logic ---
   if (mode === "idle") {
     return (
-      <main className="min-h-screen bg-gray-950 text-gray-100 p-6">
-        <div className="max-w-4xl mx-auto bg-gray-900 rounded-2xl p-6 shadow-lg">
+      <main className="min-h-screen bg-white text-gray-950 p-6">
+        <div className="max-w-4xl mx-auto bg-gray-50 rounded-2xl p-6 shadow-lg">
           <h1 className="text-3xl font-bold mb-2">CAS Exam — Live Mode</h1>
-          <p className="text-gray-300">Morning: 8 × 11:10 • Break: 30:00 • Afternoon: 8 × 8:40</p>
+          <p className="text-gray-600">Morning: 8 × 11:10 • Break: 30:00 • Afternoon: 8 × 8:40</p>
           <button
             onClick={startExam}
             disabled={busy}
-            className="mt-4 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold"
+            className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold text-white"
           >
             {busy ? "Preparing exam…" : "▶ Start Exam"}
           </button>
           <div className="mt-4 space-y-1 text-sm">
             {micReady === false && (
-              <p className="text-red-300">Mic permission blocked. Allow microphone in your browser.</p>
+              <p className="text-red-600">Mic permission blocked. Please allow mic access.</p>
             )}
-            {lastError && <p className="text-red-300">Error: {lastError}</p>}
+            {lastError && <p className="text-red-600">Error: {lastError}</p>}
           </div>
           <p className="mt-2 text-sm text-gray-500">
             (After you click Start, audio & mic permissions allow the exam to flow automatically.)
@@ -442,49 +445,49 @@ export default function LiveModePage() {
   }
   if (mode === "break") {
     return (
-      <main className="min-h-screen bg-gray-950 text-gray-100 p-6">
-        <div className="max-w-2xl mx-auto bg-gray-900 rounded-2xl p-6 shadow-lg text-center">
+      <main className="min-h-screen bg-white text-gray-950 p-6">
+        <div className="max-w-2xl mx-auto bg-gray-50 rounded-2xl p-6 shadow-lg text-center">
           <h1 className="text-3xl font-bold mb-2">Break — 30 minutes</h1>
-          <p className="text-2xl font-mono mb-6">{mmss(breakLeft)}</p>
-          <p className="text-gray-300">You’ll automatically continue with the afternoon circuit.</p>
+          <p className="text-2xl font-mono mb-6 text-purple-600">{mmss(breakLeft)}</p>
+          <p className="text-gray-600">You’ll automatically continue with the afternoon circuit.</p>
         </div>
       </main>
     );
   }
   if (mode === "finished") {
     return (
-      <main className="min-h-screen bg-gray-950 text-gray-100 p-6">
-        <div className="max-w-4xl mx-auto bg-gray-900 rounded-2xl p-6 shadow-lg">
+      <main className="min-h-screen bg-white text-gray-950 p-6">
+        <div className="max-w-4xl mx-auto bg-gray-50 rounded-2xl p-6 shadow-lg">
           <h2 className="text-2xl font-bold mb-4">📊 Exam Results</h2>
-          {busy && <p className="text-gray-300">Scoring stations…</p>}
+          {busy && <p className="text-gray-600">Scoring stations…</p>}
           {stations.map((st) => {
             const fb = feedback[st.id];
             if (!fb) return null;
             return (
-              <div key={st.id} className="mb-4 p-4 bg-gray-800 rounded-lg">
+              <div key={st.id} className="mb-4 p-4 bg-gray-100 rounded-lg">
                 <h3 className="font-semibold">{st.title}</h3>
                 <p>Overall: <strong>{fb.overall}%</strong></p>
                 <div className="grid md:grid-cols-2 gap-4 mt-2">
                   <div>
                     <h4 className="font-semibold">✔ Strengths</h4>
-                    <ul className="list-disc list-inside text-gray-300">
+                    <ul className="list-disc list-inside text-gray-600">
                       {fb.strengths.map((x, i) => <li key={i}>{x}</li>)}
                     </ul>
                   </div>
                   <div>
                     <h4 className="font-semibold">➤ Improvements</h4>
-                    <ul className="list-disc list-inside text-gray-300">
+                    <ul className="list-disc list-inside text-gray-600">
                       {fb.improvements.map((x, i) => <li key={i}>{x}</li>)}
                     </ul>
                   </div>
                 </div>
-                <p className="mt-2 text-gray-300">{fb.summary}</p>
+                <p className="mt-2 text-gray-600">{fb.summary}</p>
               </div>
             );
           })}
           <button
             onClick={() => location.assign("/dashboard")}
-            className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold"
+            className="mt-4 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-white"
           >
             Back to Dashboard
           </button>
@@ -492,18 +495,20 @@ export default function LiveModePage() {
       </main>
     );
   }
+  
   const st = stations[current];
   const inMorning = current < schedule.morning.stations;
   const circuitLabel = inMorning
     ? `Morning • ${current + 1}/${schedule.morning.stations}`
     : `Afternoon • ${current - schedule.morning.stations + 1}/${schedule.afternoon.stations}`;
+
   return (
-    <main className="min-h-screen bg-gray-950 text-gray-100 p-6">
+    <main className="min-h-screen bg-white text-gray-950 p-6">
       {phase === "roleplay" && (
         <div className="fixed top-0 left-0 right-0 z-30 text-center py-2">
           <span
             className={`px-3 py-1 rounded text-sm font-medium ${
-              patientSpeaking ? "bg-emerald-500 text-black" : "bg-amber-500 text-black"
+              patientSpeaking ? "bg-purple-600 text-white" : "bg-blue-600 text-white"
             }`}
           >
             {patientSpeaking ? "Patient speaking…" : "Conversation is ongoing…"}
@@ -511,38 +516,38 @@ export default function LiveModePage() {
         </div>
       )}
       {overlay && overlay.kind === "next" && (
-        <div className="fixed inset-0 z-40 bg-black/70 flex items-center justify-center">
+        <div className="fixed inset-0 z-40 bg-gray-950/70 flex items-center justify-center">
           <div className="text-center">
             <div className="text-6xl font-bold">{overlay.n}</div>
             <div className="mt-2 text-xl text-white/80">Next station starting…</div>
           </div>
         </div>
       )}
-      <div className="max-w-4xl mx-auto bg-gray-900 rounded-2xl p-6 shadow-lg">
+      <div className="max-w-4xl mx-auto bg-gray-50 rounded-2xl p-6 shadow-lg">
         <div className="mb-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">{circuitLabel}</h1>
           {phase === "reading" ? (
-            <span className="text-2xl font-mono text-yellow-400">🕮 {mmss(readingLeft)}</span>
+            <span className="text-2xl font-mono text-purple-600">🕮 {mmss(readingLeft)}</span>
           ) : (
-            <span className="text-2xl font-mono text-yellow-400">⏳ {mmss(roleplayLeft)}</span>
+            <span className="text-2xl font-mono text-purple-600">⏳ {mmss(roleplayLeft)}</span>
           )}
         </div>
-        <div className="p-5 bg-gray-800 rounded-lg mb-4">
+        <div className="p-5 bg-gray-100 rounded-lg mb-4">
           <h2 className="text-xl font-semibold">{st.title}</h2>
-          <p className="mt-2 text-gray-300 whitespace-pre-line">{st.scenario}</p>
+          <p className="mt-2 text-gray-600 whitespace-pre-line">{st.scenario}</p>
           <div className="mt-2 flex gap-2 flex-wrap">
             {(st.tags || []).map((t, i) => (
-              <span key={i} className="px-2 py-1 text-xs bg-gray-700 rounded-full">{t}</span>
+              <span key={i} className="px-2 py-1 text-xs bg-gray-200 rounded-full text-gray-800">{t}</span>
             ))}
           </div>
           {phase === "reading" && (
-            <p className="mt-3 text-sm text-gray-400">
+            <p className="mt-3 text-sm text-gray-500">
               Reading time. Role-play will start automatically.
             </p>
           )}
           {phase === "roleplay" && (
             <div className="mt-3 space-y-2">
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-gray-500">
                 Role-play is live. Speak naturally; the patient will respond.
               </p>
               {lastPatientLine && (
@@ -551,12 +556,12 @@ export default function LiveModePage() {
                 </p>
               )}
               {doctorSpeech && (
-                <p className="text-xs text-green-300">
+                <p className="text-xs text-blue-600">
                   Last transcribed speech: <em>{doctorSpeech}</em>
                 </p>
               )}
               {lastError && (
-                <p className="text-xs text-red-300">Error: {lastError}</p>
+                <p className="text-xs text-red-600">Error: {lastError}</p>
               )}
             </div>
           )}

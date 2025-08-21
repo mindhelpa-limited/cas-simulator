@@ -9,7 +9,7 @@ export default function Page() {
 
         <div className="grid sm:grid-cols-2 gap-6 mt-8">
           <a
-            href="/dashboard/test-mode"
+            href="/dashboard/practice-mode"
             className="block rounded-2xl border border-gray-800 bg-gray-900 hover:bg-gray-800 p-6"
           >
             <h2 className="text-xl font-semibold">Practice Mode</h2>
@@ -22,7 +22,7 @@ export default function Page() {
             className="block rounded-2xl border border-gray-800 bg-gray-900 hover:bg-gray-800 p-6"
           >
             <h2 className="text-xl font-semibold">Live Mode (Mock Exam)</h2>
-            <p className="text-gray-300 mt-1">12 stations • 2 hours • AI scoring.</p>
+            <p className="text-gray-300 mt-1">16 stations • 188 mins 30 secs (3 hrs 10 mins)</p>
             <span className="mt-4 inline-block px-3 py-1 rounded bg-blue-600">Open</span>
           </a>
         </div>

@@ -1,82 +1,74 @@
-// app/api/live-mode/reply/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 
-export const runtime = "nodejs";           // safer for OpenAI + Upstash
+// Force the API route to be dynamic, preventing caching issues
 export const dynamic = "force-dynamic";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
-
-// Upstash Redis client (REST)
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
-// 1 request per 10 seconds per key (here: by IP)
-// You can tweak the number and window to your needs.
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(1, "10 s"),
-  analytics: true,
-  prefix: "rl:live-mode-reply",
-});
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    // use IP if available, otherwise a generic key
-    const ip =
-      (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() ||
-      req.headers.get("x-real-ip") ||
-      "anonymous";
+    const formData = await req.formData();
+    const scenario = formData.get("scenario") as string;
+    const historyString = formData.get("history") as string;
+    const audioFile = formData.get("audio") as File;
 
-    const { success } = await ratelimit.limit(ip);
-    if (!success) {
-      return NextResponse.json({ error: "Ratelimit exceeded" }, { status: 429 });
+    if (!audioFile) {
+      console.error("No audio file received.");
+      return NextResponse.json({
+        doctorText: "...",
+        reply: "Sorry, I couldn't receive your audio. Please try again.",
+      }, { status: 400 });
     }
 
-    const formData = await req.formData();
-    const scenario = formData.get("scenario") as string | null;
-    const audio = formData.get("audio") as File | null;
-    const historyString = (formData.get("history") as string | null) ?? "[]";
     const history = JSON.parse(historyString);
 
-    if (!scenario || !audio) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    // Transcribe the audio using the Whisper model
+    const audioTranscription = await openai.audio.transcriptions.create({
+      file: audioFile,
+      model: "whisper-1",
+    });
+
+    const doctorText = audioTranscription.text.trim();
+    if (!doctorText) {
+      return NextResponse.json({
+        doctorText: "...",
+        reply: "I couldn't hear what you said. Could you please repeat that?",
+      });
     }
 
-    // 1) Transcribe user's audio
-    const transcription = await openai.audio.transcriptions.create({
-      file: audio,
-      model: "whisper-1",
-      language: "en",
-    });
-    const doctorText = transcription.text;
-
-    // 2) Generate patient reply
-    const messages = [
+    // Prepare the messages for the chat completion
+    const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
       {
         role: "system",
-        content:
-          "You are a realistic patient in a UK medical exam. Keep responses concise and realistic based on the provided scenario. Do not offer unsolicited info. Respond naturally to the doctor's questions.",
+        content: `You are an AI patient simulator. Your persona and the scenario are as follows: ${scenario}.
+          You will respond to a doctor's queries, roleplaying as the patient. Keep your responses short and to the point.
+          Avoid asking questions yourself; wait for the doctor's next question.`,
       },
       ...history,
       { role: "user", content: doctorText },
     ];
 
+    // Get the patient's reply using the GPT-4o-mini model
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      messages: messages as any,
-      temperature: 0.8,
-      stream: false,
+      messages: messages,
     });
 
-    const reply = completion.choices[0].message.content;
-    return NextResponse.json({ doctorText, reply });
+    const reply = completion.choices[0].message.content?.trim() || "";
+
+    // Return the doctor's transcribed speech and the patient's reply
+    return NextResponse.json({
+      doctorText,
+      reply,
+    });
+
   } catch (error) {
-    console.error("Error in reply route:", error);
-    return NextResponse.json({ error: "Failed to process request" }, { status: 500 });
+    // Log the full error to the server console for debugging
+    console.error("API route error:", error);
+    // Return a generic error to the client to avoid revealing internal details
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

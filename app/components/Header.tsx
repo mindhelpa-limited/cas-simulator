@@ -47,7 +47,7 @@ const Header = () => {
       <rect x="3" y="16" width="7" height="5" rx="1" />
     </svg>
   );
-  
+
   const LoginIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
@@ -55,12 +55,13 @@ const Header = () => {
       <line x1="15" y1="12" x2="3" y2="12" />
     </svg>
   );
-
+  
+  // This is the array of navigation items, which are used to render both desktop and mobile menus.
   const navItems = [
     { name: 'Home', path: '/', icon: <HomeIcon /> },
     { name: 'About Us', path: '/about', icon: <AboutIcon /> },
-    { name: 'Contact Us', path: '/contact us', icon: <ContactIcon /> },
     { name: 'Pricing', path: '/pricing', icon: <PricingIcon /> },
+    { name: 'Contact Us', path: '/contact us', icon: <ContactIcon /> },
     { name: 'Dashboard', path: '/dashboard', icon: <DashboardIcon /> },
     { name: 'Login', path: '/login', icon: <LoginIcon /> },
   ];
@@ -71,8 +72,9 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo or App Name */}
           <div className="flex-shrink-0">
-            <a href="/" className="text-2xl font-bold text-gray-800">
-              My App
+            {/* The logo is now an image from the public folder */}
+            <a href="/" className="flex-shrink-0">
+              <img src="/logocas.png" alt="My App Logo" className="h-8 w-auto" />
             </a>
           </div>
 
