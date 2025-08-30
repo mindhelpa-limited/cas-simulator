@@ -1,8 +1,9 @@
+// app/api/checkout/session/route.ts
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 import { PLANS, type PlanId } from "@/lib/plans";
-
+import { adminAuth } from "@/lib/firebase-admin";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: Request) {
@@ -11,6 +12,15 @@ export async function POST(req: Request) {
     if (!body?.planId) {
       return NextResponse.json({ error: "Missing planId" }, { status: 400 });
     }
+
+    // FIX: Await the headers() function to get the headers object
+    const allHeaders = await headers();
+    const authH = allHeaders.get("authorization") || "";
+
+    const idToken = authH.startsWith("Bearer ") ? authH.slice(7) : "";
+    if (!idToken) return NextResponse.json({ error: "Missing Authorization" }, { status: 401 });
+    // Corrected usage: adminAuth is an object, not a function.
+    const user = await adminAuth.verifyIdToken(idToken);
 
     const plan = PLANS[body.planId];
     if (!plan) {
@@ -21,11 +31,10 @@ export async function POST(req: Request) {
     }
 
     const origin =
-      (await headers()).get("origin") ??
+      allHeaders.get("origin") ??
       process.env.NEXT_PUBLIC_BASE_URL ??
       "http://localhost:3000";
 
-    // If a coupon code is provided and matches DRKELVIN100, load its promotion_code from Stripe
     let discounts: Stripe.Checkout.SessionCreateParams.Discount[] | undefined;
     const code = body.coupon?.trim().toUpperCase();
     if (code === "DRKELVIN100") {
@@ -40,7 +49,6 @@ export async function POST(req: Request) {
       discounts = [{ promotion_code: promo.id }];
     }
 
-    // ONE-TIME PAYMENT with inline price_data (no saved Stripe Price needed)
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: [
@@ -48,7 +56,7 @@ export async function POST(req: Request) {
           quantity: 1,
           price_data: {
             currency: plan.currency ?? "gbp",
-            unit_amount: Math.round(plan.amount), // amount in minor units (pence)
+            unit_amount: Math.round(plan.amount),
             product_data: {
               name: `CAS ${plan.product === "test" ? "Practice" : "Live"} — ${plan.durationDays} days`,
             },
@@ -58,11 +66,10 @@ export async function POST(req: Request) {
       metadata: {
         product: plan.product,
         durationDays: String(plan.durationDays),
+        uid: user.uid,
       },
-      // Enable codes in the UI, and apply our code if present
       allow_promotion_codes: true,
       discounts,
-
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/pricing?canceled=1`,
     });

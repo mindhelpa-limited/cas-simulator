@@ -1,7 +1,7 @@
 // app/api/entitlements/claim/route.ts
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { adminAuth, adminDb } from "@/lib/firebase-admin";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     const idToken = authH.startsWith("Bearer ") ? authH.slice(7) : "";
     if (!idToken) return NextResponse.json({ error: "Missing Authorization" }, { status: 401 });
 
-    const user = await adminAuth().verifyIdToken(idToken);
+    const user = await adminAuth.verifyIdToken(idToken);
 
     const { session_id } = await req.json();
     if (!session_id) return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
     const expiresAt = Date.now() + durationDays * 24 * 60 * 60 * 1000;
 
-    await adminDb()
+    await adminDb
       .collection("users")
       .doc(user.uid)
       .collection("entitlements")

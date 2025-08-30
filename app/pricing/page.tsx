@@ -1,240 +1,159 @@
-"use client";
+// app/pricing/page.tsx
+export const runtime = "nodejs";        // ✅ ensure Node runtime (Stripe SDK needs this)
+export const dynamic = "force-dynamic"; // avoid static caching during dev
 
-import React, { useState } from "react";
-import { PLANS, TEST_PLAN_IDS, LIVE_PLAN_IDS, type PlanId } from "@/lib/plans";
-import { Menu } from "lucide-react";
+import Stripe from "stripe";
+import { redirect } from "next/navigation";
 
-/* ----------------------------- Header ----------------------------- */
-function Header() {
-  const [open, setOpen] = useState(false);
-  return (
-    <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <a href="/" className="flex items-center gap-3">
-          {/* Logo only (removed CASCSUCCESS text) */}
-          <img src="/logocas.png" alt="CAS Prep" className="h-8 w-auto" />
-        </a>
+const SECRET = process.env.STRIPE_SECRET_KEY;
+if (!SECRET) {
+  throw new Error("STRIPE_SECRET_KEY is missing from .env.local");
+}
+const STRIPE = new Stripe(SECRET); // let SDK use account API version
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-        <nav className="hidden items-center gap-8 md:flex">
-          <a className="text-gray-700 hover:text-indigo-600 transition" href="/">Home</a>
-          <a className="text-gray-700 hover:text-indigo-600 transition" href="/about">About Us</a>
-          <a className="text-indigo-600 font-medium" href="/pricing">Pricing</a>
-          <a className="text-gray-700 hover:text-indigo-600 transition" href="/contact-us">Contact</a>
-          <a
-            href="/dashboard"
-            className="rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition"
-          >
-            Sign In
-          </a>
-        </nav>
+// Read price IDs from env (comma-separated)
+const LIVE_IDS = (process.env.LIVE_PRICE_IDS || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 md:hidden"
-          aria-label="Toggle menu"
-        >
-          <Menu className="h-6 w-6" />
-        </button>
-      </div>
+const PRACTICE_IDS = (process.env.PRACTICE_PRICE_IDS || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 
-      {open && (
-        <div className="border-t border-gray-200 bg-white md:hidden">
-          <nav className="mx-auto flex max-w-6xl flex-col px-4 py-4">
-            {[
-              ["Home", "/"],
-              ["About Us", "/about"],
-              ["Pricing", "/pricing"],
-              ["Contact", "/contact-us"],
-            ].map(([label, href]) => (
-              <a
-                key={href}
-                href={href}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-2 py-2 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-              >
-                {label}
-              </a>
-            ))}
-            <a
-              href="/dashboard"
-              onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-2 text-center text-sm font-semibold text-white shadow-lg hover:opacity-90"
-            >
-              Sign In
-            </a>
-          </nav>
-        </div>
-      )}
-    </header>
-  );
+type PriceRow = {
+  id: string;
+  label: string;     // e.g. "1 Month"
+  amount: string;    // formatted currency
+  accessDays?: number;
+};
+
+function money(unitCents: number, currency: string) {
+  return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(unitCents / 100);
 }
 
-/* ----------------------------- Footer ----------------------------- */
-function Footer() {
-  return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-8 text-center text-sm text-gray-500">
-        <p>&copy; {new Date().getFullYear()} CASCSUCCESS. All Rights Reserved.</p>
-      </div>
-    </footer>
-  );
+// Narrow to real Product before reading .metadata
+function productMetadata(p: Stripe.Price["product"]): Record<string, string> | undefined {
+  if (typeof p === "string") return undefined;
+  if ("deleted" in p && p.deleted) return undefined;
+  return (p as Stripe.Product).metadata || undefined;
 }
 
-/* --------------------------------- Page ---------------------------------- */
-export default function PricingPage() {
-  const [loading, setLoading] = useState<string | null>(null);
+async function getRows(ids: string[]): Promise<PriceRow[]> {
+  const out: PriceRow[] = [];
+  for (const id of ids) {
+    try {
+      const price = await STRIPE.prices.retrieve(id, { expand: ["product"] });
+      const unit = typeof price.unit_amount === "number" ? price.unit_amount : 0;
+      const cur = (price.currency || "usd").toUpperCase();
 
-  // ✅ Your logic unchanged
-  const checkout = async (planId: PlanId) => {
-    setLoading(planId);
-    const res = await fetch("/api/checkout/session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ planId }),
-    });
-    const data = await res.json();
-    setLoading(null);
-    if (data?.url) window.location.href = data.url;
-    else alert(data?.error || "Failed to start checkout");
-  };
+      const md = {
+        ...(productMetadata(price.product) || {}),
+        ...(price.metadata || {}),
+      } as Record<string, string>;
 
-  return (
-    <div className="min-h-screen bg-white text-gray-900">
-      <Header />
+      const days = md["access_days"] ? Number(md["access_days"]) : undefined;
+      const months = days ? Math.round(days / 30) : undefined;
+      const label = months ? `${months} Month${months > 1 ? "s" : ""}` : "Access";
 
-      <main className="mx-auto max-w-6xl px-4 pb-24 pt-16 md:pt-24">
-        {/* Hero */}
-        <section className="text-center">
-          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-600">
-            Secure Stripe Checkout
-          </div>
-          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
-            Choose your plan
-          </h1>
-          <p className="mx-auto mt-3 max-w-2xl text-gray-600">
-            Access is tied to your email. Practice unlimitedly or book a full mock exam with AI scoring.
-          </p>
-        </section>
-
-        {/* Plans */}
-        <section className="mt-14 grid gap-8 md:grid-cols-2">
-          <Card
-            title="Practice Mode"
-            badge="Popular for revision"
-            desc="Unlimited practice with instant feedback."
-            gradient="from-indigo-100 to-indigo-50"
-            accent="indigo"
-          >
-            {TEST_PLAN_IDS.map((id) => {
-              const p = PLANS[id];
-              return (
-                <PlanRow
-                  key={p.id}
-                  label={p.uiLabel}
-                  onClick={() => checkout(p.id)}
-                  loading={loading === p.id}
-                  accent="indigo"
-                />
-              );
-            })}
-          </Card>
-
-          <Card
-            title="Live Mode (Mock Exam)"
-            badge="Most comprehensive"
-            desc="16 stations • 188 mins 30 secs (3 hrs 10 mins)"
-            gradient="from-violet-100 to-fuchsia-50"
-            accent="violet"
-          >
-            {LIVE_PLAN_IDS.map((id) => {
-              const p = PLANS[id];
-              return (
-                <PlanRow
-                  key={p.id}
-                  label={p.uiLabel}
-                  onClick={() => checkout(p.id)}
-                  loading={loading === p.id}
-                  accent="violet"
-                />
-              );
-            })}
-          </Card>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
-  );
+      out.push({
+        id,
+        label,
+        amount: unit ? money(unit, cur) : "",
+        accessDays: Number.isFinite(days as number) ? (days as number) : undefined,
+      });
+    } catch (e) {
+      // If a bad price ID is in env, keep page rendering and show an entry you can notice
+      out.push({ id, label: "Invalid price", amount: "—" });
+    }
+  }
+  return out.sort((a, b) => (a.accessDays ?? 0) - (b.accessDays ?? 0));
 }
 
-/* --------------------------------- UI bits -------------------------------- */
+// --- SERVER ACTION: create a Checkout Session ---
+async function startCheckout(formData: FormData) {
+  "use server";
+  const priceId = String(formData.get("priceId") || "");
+  const productKey = String(formData.get("productKey") || ""); // "live-mode" | "practice-mode"
 
-function Card({
-  title,
-  desc,
-  badge,
-  gradient,
-  accent,
-  children,
-}: {
-  title: string;
-  desc: string;
-  badge?: string;
-  gradient: string; // tailwind gradient classes after 'bg-gradient-to-br'
-  accent: "indigo" | "violet";
-  children: React.ReactNode;
-}) {
-  const ring =
-    accent === "indigo"
-      ? "ring-indigo-200 hover:ring-indigo-300"
-      : "ring-violet-200 hover:ring-violet-300";
+  const all = [...LIVE_IDS, ...PRACTICE_IDS];
+  if (!all.includes(priceId)) throw new Error("Invalid price selected");
+
+  const session = await STRIPE.checkout.sessions.create({
+    mode: "payment",
+    line_items: [{ price: priceId, quantity: 1 }],
+    metadata: { productKey }, // read on /checkout/return
+    success_url: `${BASE_URL}/checkout/return?cs={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${BASE_URL}/pricing?checkout=cancelled`,
+    automatic_tax: { enabled: true },
+  });
+
+  redirect(session.url!);
+}
+
+export default async function PricingPage() {
+  // If no IDs, render a clear message instead of hanging
+  const noLive = LIVE_IDS.length === 0;
+  const noPractice = PRACTICE_IDS.length === 0;
+
+  const [liveRows, practiceRows] = await Promise.all([
+    noLive ? Promise.resolve<PriceRow[]>([]) : getRows(LIVE_IDS),
+    noPractice ? Promise.resolve<PriceRow[]>([]) : getRows(PRACTICE_IDS),
+  ]);
 
   return (
-    <div className={`group rounded-2xl bg-white p-6 shadow-lg ring-1 ring-gray-200 transition-all hover:shadow-xl ${ring}`}>
-      <div className={`rounded-xl bg-gradient-to-br ${gradient} p-0.5`}>
-        <div className="rounded-[10px] bg-white p-6">
-          {badge && (
-            <div className="mb-3 inline-flex rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-600">
-              {badge}
+    <main className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-semibold mb-6">Choose your plan</h1>
+
+      <section className="grid md:grid-cols-2 gap-6">
+        {/* Live Mode */}
+        <div className="border rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xl font-semibold mb-2">Live Mode (Mock Exam)</h2>
+          <p className="text-sm text-neutral-600 mb-4">One-time payment — time-limited access.</p>
+          {noLive ? (
+            <p className="text-sm text-red-600">LIVE_PRICE_IDS is empty in .env.local</p>
+          ) : (
+            <div className="space-y-3">
+              {liveRows.map((row) => (
+                <form key={row.id} action={startCheckout}>
+                  <input type="hidden" name="priceId" value={row.id} />
+                  <input type="hidden" name="productKey" value="live-mode" />
+                  <button type="submit" className="w-full rounded-lg py-2.5 px-4 bg-black text-white">
+                    {row.label} — {row.amount}
+                  </button>
+                </form>
+              ))}
             </div>
           )}
-          <h2 className="text-2xl font-semibold text-gray-900">{title}</h2>
-          <p className="mt-1 text-gray-600">{desc}</p>
-          <div className="mt-6 space-y-4">{children}</div>
         </div>
-      </div>
-    </div>
-  );
-}
 
-function PlanRow({
-  label,
-  onClick,
-  loading,
-  accent,
-}: {
-  label: string;
-  onClick: () => void;
-  loading: boolean;
-  accent: "indigo" | "violet";
-}) {
-  const pill =
-    accent === "indigo"
-      ? "from-indigo-600 to-blue-600"
-      : "from-violet-600 to-fuchsia-600";
+        {/* Practice Mode */}
+        <div className="border rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xl font-semibold mb-2">Practice Mode</h2>
+          <p className="text-sm text-neutral-600 mb-4">One-time payment — time-limited access.</p>
+          {noPractice ? (
+            <p className="text-sm text-red-600">PRACTICE_PRICE_IDS is empty in .env.local</p>
+          ) : (
+            <div className="space-y-3">
+              {practiceRows.map((row) => (
+                <form key={row.id} action={startCheckout}>
+                  <input type="hidden" name="priceId" value={row.id} />
+                  <input type="hidden" name="productKey" value="practice-mode" />
+                  <button type="submit" className="w-full rounded-lg py-2.5 px-4 bg-black text-white">
+                    {row.label} — {row.amount}
+                  </button>
+                </form>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
-  return (
-    <button
-      onClick={onClick}
-      disabled={loading}
-      className="w-full rounded-xl border border-gray-200 bg-gray-50 p-4 text-left shadow-sm transition-all hover:bg-gray-100 disabled:opacity-60"
-    >
-      <div className="flex items-center justify-between">
-        <span className="text-base font-medium text-gray-900">{label}</span>
-        <span className={`rounded-full bg-gradient-to-r ${pill} px-4 py-1.5 text-sm font-semibold text-white shadow-md`}>
-          {loading ? "Redirecting…" : "Buy"}
-        </span>
-      </div>
-    </button>
+      <p className="text-xs text-neutral-500 mt-6">
+        Duration is determined by each price’s <code>access_days</code> metadata in Stripe.
+      </p>
+    </main>
   );
 }

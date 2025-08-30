@@ -1,0 +1,3144 @@
+[
+  {
+    "id": 1,
+    "station": "History Taking Station 1 (SPMM)",
+    "candidate": "A 32-year-old woman has been referred by her GP because of persistent low mood, early morning waking, and loss of appetite. Take a history from the patient.",
+    "roleplayer": "You are a 32-year-old woman. You have been feeling low for the past 6 weeks. You wake up at 4am every day and cannot get back to sleep. You have lost 4kg in weight. You feel guilty about being a burden to your family. If the doctor asks, you admit to occasional thoughts that life is not worth living, but you have made no plans. If the doctor asks directly, you deny hallucinations or delusions. You have no past psychiatric history. Your mother had depression in her 40s.",
+    "script": {
+      "opening": "“I just don’t feel myself anymore, doctor.”",
+      "mood": "Elicit core depressive symptoms (mood, anhedonia, early waking, weight loss, guilt).",
+      "sleep": "If asked about sleep → “I wake up very early and can’t get back to sleep.”",
+      "appetite": "If asked about appetite → “I’ve lost about 4 kilos.”",
+      "guilt": "If asked about guilt → “I feel like a burden to my family.”"
+    }
+  },
+  {
+    "id": 2,
+    "station": "History Taking Station 2 (SPMM)",
+    "candidate": "A 45-year-old man has been referred because of heavy alcohol use. Take a history of his drinking and its effects.",
+    "roleplayer": "You are a 45-year-old man. You drink whisky daily, about half a bottle. You worry about your health but are reluctant to admit dependence. You get shaky in the morning if you don’t drink. You argue with your wife and sometimes miss work.",
+    "script": {
+      "opening": "“I suppose I drink more than I should, doctor.”"
+    }
+  },
+  {
+    "id": 3,
+    "station": "History Taking Station 3 (SPMM)",
+    "candidate": "A 25-year-old student is brought by his friends because of odd behaviour. Take a psychiatric history.",
+    "roleplayer": "You are a 25-year-old male student. Over the past 3 months you have become increasingly withdrawn, laugh inappropriately, and believe people are watching you. You sometimes hear voices commenting on you. You smoke cannabis regularly.",
+    "script": {
+      "opening": "“My friends say I’ve been acting strange.”"
+    }
+  },
+  {
+    "id": 4,
+    "station": "History Taking Station 4 (SPMM)",
+    "candidate": "A 60-year-old man is referred for memory problems. Take a history.",
+    "roleplayer": "You are a 60-year-old man. Over the past year, you have become forgetful. You sometimes misplace things and forget conversations. Your wife complains you repeat yourself. You are still independent but slower with tasks.",
+    "script": {
+      "opening": "“My wife says I forget things a lot.”"
+    }
+  },
+  {
+    "id": 5,
+    "station": "History Taking Station 5 (SPMM)",
+    "candidate": "A 28-year-old woman presents with recurrent panic attacks. Take a history.",
+    "roleplayer": "You are a 28-year-old woman. For the past 3 months, you have had sudden episodes of intense fear, palpitations, breathlessness, and feeling of impending doom. Attacks last 10–15 minutes. You worry about having another attack.",
+    "script": {
+      "opening": "“Doctor, I keep having these scary attacks.”"
+    }
+  },
+  {
+    "id": 6,
+    "station": "History Taking Station 6 (SPMM)",
+    "candidate": "A 19-year-old university student presents with low mood and deliberate self-harm. Take a history.",
+    "roleplayer": "You are a 19-year-old student. You have been low for 2 months, cut yourself on your arm last week. You feel hopeless about exams. Your sleep is poor.",
+    "script": {
+      "opening": "“I don’t see the point anymore.”",
+      "mood": "If asked about mood → “Low all the time.”",
+      "sleep": "If asked about sleep → “I can’t sleep well.”"
+    }
+  },
+  {
+    "id": 7,
+    "station": "History Taking Station 7 (SPMM)",
+    "candidate": "A 50-year-old man presents with gambling problems. Take a history.",
+    "roleplayer": "You are a 50-year-old man. For years you have gambled heavily, mainly on horses and online. You have large debts and arguments with your wife. You hide the extent of your gambling.",
+    "script": {
+      "opening": "“I can’t seem to stop betting.”"
+    }
+  },
+  {
+    "id": 8,
+    "station": "History Taking Station 8 (SPMM)",
+    "candidate": "A 35-year-old man presents with obsessional hand-washing. Take a history.",
+    "roleplayer": "You are a 35-year-old man. You spend hours washing your hands, fear contamination. You know it’s excessive but can’t stop. It affects your work and marriage.",
+    "script": {
+      "opening": "“I wash my hands all the time.”"
+    }
+  },
+  {
+    "id": 9,
+    "station": "History Taking Station 9 (SPMM)",
+    "candidate": "A 70-year-old woman presents with low mood following bereavement. Take a history.",
+    "roleplayer": "You are a 70-year-old widow. Your husband died 3 months ago. You feel sad and lonely. You cry often but still enjoy visits from family. You have no suicidal thoughts.",
+    "script": {
+      "opening": "“I just miss my husband so much.”",
+      "sleep": "If asked about sleep → “I wake up sometimes crying.”",
+      "mood": "Ask about mood, anhedonia."
+    }
+  },
+  {
+    "id": 10,
+    "station": "History Taking Station 10 (SPMM)",
+    "candidate": "A 20-year-old man is referred for possible anorexia nervosa. Take a history.",
+    "roleplayer": "You are a 20-year-old man. For the past year you have restricted your eating, lost 15kg. You fear being fat, even though you are underweight. You deny serious medical symptoms.",
+    "script": {
+      "opening": "“I just want to stay in control of my weight.”"
+    }
+  },
+  {
+    "id": 11,
+    "station": "History Taking Station 11 (SPMM)",
+    "candidate": "A 40-year-old woman has recurrent headaches. Take a psychiatric history.",
+    "roleplayer": "You are a 40-year-old woman. For the last 6 months, you’ve had headaches nearly every day. They get worse with stress. You are worried they mean something serious. You also feel tired and irritable.",
+    "script": {
+      "opening": "“I keep getting these headaches, doctor.”",
+      "mood": "Ask about stress, mood, sleep."
+    }
+  },
+  {
+    "id": 12,
+    "station": "History Taking Station 12 (SPMM)",
+    "candidate": "A 26-year-old woman presents with postnatal low mood. Take a history.",
+    "roleplayer": "You are a 26-year-old mother. Your baby is 6 weeks old. You feel tearful and overwhelmed. You struggle to bond with the baby. You have poor sleep.",
+    "script": {
+      "opening": "“I can’t stop crying.”",
+      "sleep": "If asked about sleep → “I hardly sleep, even when the baby sleeps.”",
+      "mood": "If asked about mood → “Low all the time.”"
+    }
+  },
+  {
+    "id": 13,
+    "station": "History Taking Station 13 (SPMM)",
+    "candidate": "A 34-year-old man presents with back pain. Take a psychiatric history.",
+    "roleplayer": "You are a 34-year-old man. You have back pain for 2 years. Doctors say nothing serious is wrong. You feel angry and frustrated. You worry you can’t work.",
+    "script": {
+      "opening": "“My back pain just won’t go away.”",
+      "mood": "Ask about mood and anxiety."
+    }
+  },
+  {
+    "id": 14,
+    "station": "History Taking Station 14 (SPMM)",
+    "candidate": "A 21-year-old student presents with excessive anxiety. Take a history.",
+    "roleplayer": "You are a 21-year-old student. You worry about everything. You feel tense, restless, and have poor sleep. This has been ongoing for over 6 months.",
+    "script": {
+      "opening": "“I just can’t stop worrying.”",
+      "sleep": "If asked about symptoms → “I feel tense, restless, can’t sleep.”"
+    }
+  },
+  {
+    "id": 15,
+    "station": "History Taking Station 15 (SPMM)",
+    "candidate": "A 37-year-old man is referred with anger and irritability. Take a psychiatric history.",
+    "roleplayer": "You are a 37-year-old man. For the last year you have been irritable, shouting at family, sometimes breaking things. You feel tense and on edge.",
+    "script": {
+      "opening": "“I get angry so easily.”",
+      "mood": "Explore mood, irritability, possible depression."
+    }
+  },
+  {
+    "id": 16,
+    "station": "History Taking Station 16 (SPMM)",
+    "candidate": "A 19-year-old man presents with social anxiety. Take a history.",
+    "roleplayer": "You are a 19-year-old man. Since your teens you have avoided social situations. You fear embarrassment. You blush and tremble in public. You avoid parties and speaking in class.",
+    "script": {
+      "opening": "“I just can’t be around people.”"
+    }
+  },
+  {
+    "id": 17,
+    "station": "History Taking Station 17 (SPMM)",
+    "candidate": "A 29-year-old woman presents with poor concentration. Take a psychiatric history.",
+    "roleplayer": "You are a 29-year-old woman. For months you cannot concentrate at work. You forget tasks. You also feel anxious and low.",
+    "script": {
+      "opening": "“I can’t focus at work anymore.”",
+      "mood": "Explore mood/anxiety.",
+      "sleep": "If asked about sleep → “Poor sleep.”"
+    }
+  },
+  {
+    "id": 18,
+    "station": "History Taking Station 18 (SPMM)",
+    "candidate": "A 42-year-old woman presents with sexual difficulties. Take a psychiatric history.",
+    "roleplayer": "You are a 42-year-old woman. For the last year you have lost interest in sex. You avoid intimacy. You feel anxious about your relationship.",
+    "script": {
+      "opening": "“I just don’t want sex anymore.”",
+      "mood": "Ask about mood and anxiety."
+    }
+  },
+  {
+    "id": 19,
+    "station": "History Taking Station 19 (SPMM)",
+    "candidate": "A 35-year-old man presents with obsessive doubts. Take a history.",
+    "roleplayer": "You are a 35-year-old man. You keep checking doors and appliances, afraid something bad will happen. You know it’s irrational but cannot stop.",
+    "script": {
+      "opening": "“I check things over and over.”"
+    }
+  },
+  {
+    "id": 20,
+    "station": "History Taking Station 20 (SPMM)",
+    "candidate": "A 47-year-old woman presents with insomnia. Take a psychiatric history.",
+    "roleplayer": "You are a 47-year-old woman. For months you cannot sleep well. You wake early, feel tired. You worry constantly.",
+    "script": {
+      "opening": "“I can’t sleep properly anymore.”",
+      "sleep": "If asked about sleep → “I wake up very early.”",
+      "mood": "If asked about mood → “I feel tired and low.”"
+    }
+  },
+  {
+    "id": 21,
+    "station": "History Taking Station 21 (SPMM)",
+    "candidate": "A 28-year-old man presents with panic attacks. Take a psychiatric history.",
+    "roleplayer": "You are a 28-year-old man. For the past 3 months you’ve had sudden episodes of intense fear, palpitations, breathlessness, sweating, and a fear of dying. You avoid going out alone.",
+    "script": {
+      "opening": "“I keep getting these awful attacks.”"
+    }
+  },
+  {
+    "id": 22,
+    "station": "History Taking Station 22 (SPMM)",
+    "candidate": "A 60-year-old man presents with memory problems. Take a psychiatric history.",
+    "roleplayer": "You are a 60-year-old man. For the past year you forget things like appointments and names. Family are worried. You get lost sometimes.",
+    "script": {
+      "opening": "“I keep forgetting things.”"
+    }
+  },
+  {
+    "id": 23,
+    "station": "History Taking Station 23 (SPMM)",
+    "candidate": "A 24-year-old woman presents with eating problems. Take a psychiatric history.",
+    "roleplayer": "You are a 24-year-old woman. You restrict food, exercise excessively, and have lost a lot of weight. You are fearful of gaining weight.",
+    "script": {
+      "opening": "“I don’t like eating much.”"
+    }
+  },
+  {
+    "id": 24,
+    "station": "History Taking Station 24 (SPMM)",
+    "candidate": "A 33-year-old man presents with suspiciousness. Take a psychiatric history.",
+    "roleplayer": "You are a 33-year-old man. For months you feel people are watching and talking about you. You avoid social situations.",
+    "script": {
+      "opening": "“I feel people are watching me.”"
+    }
+  },
+  {
+    "id": 25,
+    "station": "History Taking Station 25 (SPMM)",
+    "candidate": "A 30-year-old woman presents with poor sleep and low mood. Take a psychiatric history.",
+    "roleplayer": "You are a 30-year-old woman. You have poor sleep, loss of interest, low energy, and feel guilty.",
+    "script": {
+      "opening": "“I can’t sleep properly.”",
+      "mood": "If asked about mood → “I feel down all the time.”",
+      "guilt": "If asked about guilt → “I feel I’ve let everyone down.”"
+    }
+  },
+  {
+    "id": 26,
+    "station": "History Taking Station 26 (SPMM)",
+    "candidate": "A 19-year-old student presents with weight gain and low mood. Take a psychiatric history.",
+    "roleplayer": "You are a 19-year-old student. You feel low, sleep a lot, overeat, and have gained weight. You lack motivation.",
+    "script": {
+      "opening": "“I just keep eating and sleeping.”",
+      "mood": "If asked about mood → “I feel down.”",
+      "appetite": "If asked about appetite → “I overeat.”",
+      "sleep": "If asked about sleep → “I sleep all the time.”"
+    }
+  },
+  {
+    "id": 27,
+    "station": "History Taking Station 27 (SPMM)",
+    "candidate": "A 42-year-old woman presents with unexplained abdominal pain. Take a psychiatric history.",
+    "roleplayer": "You are a 42-year-old woman. For years you’ve had abdominal pain with no clear cause. You have frequent investigations. You are anxious about health.",
+    "script": {
+      "opening": "“My stomach always hurts.”",
+      "mood": "If asked about mood → “I feel anxious.”"
+    }
+  },
+  {
+    "id": 28,
+    "station": "History Taking Station 28 (SPMM)",
+    "candidate": "A 45-year-old man presents with problems at work. Take a psychiatric history.",
+    "roleplayer": "You are a 45-year-old man. For 6 months you’ve struggled at work. You feel low, can’t concentrate, and colleagues notice mistakes.",
+    "script": {
+      "opening": "“I can’t cope at work anymore.”",
+      "mood": "Ask about mood, sleep, concentration."
+    }
+  },
+  {
+    "id": 29,
+    "station": "History Taking Station 29 (SPMM)",
+    "candidate": "A 36-year-old woman presents with fatigue. Take a psychiatric history.",
+    "roleplayer": "You are a 36-year-old woman. For months you feel exhausted. Sleep does not refresh you. Doctors found nothing wrong. You feel hopeless.",
+    "script": {
+      "opening": "“I’m tired all the time.”",
+      "sleep": "If asked about sleep → “I sleep but still feel exhausted.”",
+      "mood": "Ask about mood and anxiety."
+    }
+  },
+  {
+    "id": 30,
+    "station": "History Taking Station 30 (SPMM)",
+    "candidate": "A 20-year-old student presents with self-harm. Take a psychiatric history.",
+    "roleplayer": "You are a 20-year-old student. For the past 3 months you have cut your arms when stressed. You feel overwhelmed and hopeless.",
+    "script": {
+      "opening": "“I’ve been cutting myself.”"
+    }
+  },
+  {
+    "id": 31,
+    "station": "History Taking Station 31 (SPMM)",
+    "candidate": "A 27-year-old woman presents with recurrent fainting episodes. Take a psychiatric history.",
+    "roleplayer": "You are a 27-year-old woman. For months you’ve had fainting spells with no clear medical cause. You feel anxious and stressed.",
+    "script": {
+      "opening": "“I keep fainting for no reason.”",
+      "mood": "If asked about mood → “I feel anxious.”"
+    }
+  },
+  {
+    "id": 32,
+    "station": "History Taking Station 32 (SPMM)",
+    "candidate": "A 41-year-old man presents with gambling problems. Take a psychiatric history.",
+    "roleplayer": "You are a 41-year-old man. For 3 years you gamble excessively, losing money and hiding it from family. You feel guilty and low.",
+    "script": {
+      "opening": "“I can’t stop gambling.”",
+      "mood": "If asked about mood → “I feel guilty and low.”"
+    }
+  },
+  {
+    "id": 33,
+    "station": "History Taking Station 33 (SPMM)",
+    "candidate": "A 23-year-old woman presents with eating binges. Take a psychiatric history.",
+    "roleplayer": "You are a 23-year-old woman. You binge eat several times a week, feel out of control, and then feel guilty. You sometimes vomit after eating.",
+    "script": {
+      "opening": "“I can’t control my eating.”",
+      "guilt": "If asked about feelings → “I feel guilty after.”"
+    }
+  },
+  {
+    "id": 34,
+    "station": "History Taking Station 34 (SPMM)",
+    "candidate": "A 55-year-old man presents with alcohol problems. Take a psychiatric history.",
+    "roleplayer": "You are a 55-year-old man. You drink daily, often heavily. You feel you cannot cope without alcohol. Your family is worried.",
+    "script": {
+      "opening": "“I drink every day now.”"
+    }
+  },
+  {
+    "id": 35,
+    "station": "History Taking Station 35 (SPMM)",
+    "candidate": "A 38-year-old woman presents with low self-esteem. Take a psychiatric history.",
+    "roleplayer": "You are a 38-year-old woman. You always feel inadequate, avoid responsibility, and fear criticism. You struggle in relationships.",
+    "script": {
+      "opening": "“I never feel good enough.”"
+    }
+  },
+  {
+    "id": 36,
+    "station": "History Taking Station 36 (SPMM)",
+    "candidate": "A 29-year-old man presents with drug use. Take a psychiatric history.",
+    "roleplayer": "You are a 29-year-old man. You use cocaine several times a week. You spend lots of money on it. You feel low when you stop.",
+    "script": {
+      "opening": "“I use coke a few times a week.”"
+    }
+  },
+  {
+    "id": 37,
+    "station": "History Taking Station 37 (SPMM)",
+    "candidate": "A 25-year-old woman presents with compulsive shopping. Take a psychiatric history.",
+    "roleplayer": "You are a 25-year-old woman. You shop excessively, buying things you don’t need. You feel guilty after. It affects your finances.",
+    "script": {
+      "opening": "“I can’t stop shopping.”",
+      "guilt": "If asked about feelings → “I feel guilty after.”",
+      "mood": "Explore mood and guilt."
+    }
+  },
+  {
+    "id": 38,
+    "station": "History Taking Station 38 (SPMM)",
+    "candidate": "A 44-year-old man presents with work stress. Take a psychiatric history.",
+    "roleplayer": "You are a 44-year-old man. For months you feel under pressure at work, irritable, and unable to cope. You have poor sleep.",
+    "script": {
+      "opening": "“Work is just too much.”",
+      "mood": "Ask about mood, sleep.",
+      "sleep": "If asked about sleep → “I hardly sleep.”"
+    }
+  },
+  {
+    "id": 39,
+    "station": "History Taking Station 39 (SPMM)",
+    "candidate": "A 52-year-old woman presents with chronic pain. Take a psychiatric history.",
+    "roleplayer": "You are a 52-year-old woman. For years you’ve had widespread pain with no clear cause. You feel tired, low, and frustrated.",
+    "script": {
+      "opening": "“I hurt all over.”",
+      "mood": "Ask about mood and coping."
+    }
+  },
+  {
+    "id": 40,
+    "station": "History Taking Station 40 (SPMM)",
+    "candidate": "A 19-year-old woman presents with self-neglect. Take a psychiatric history.",
+    "roleplayer": "You are a 19-year-old woman. For months you stopped washing, eating well, or going out. You hear voices saying you’re worthless.",
+    "script": {
+      "opening": "“I just don’t look after myself anymore.”",
+      "mood": "If asked about mood → “I feel empty.”"
+    }
+  },
+  {
+    "id": 41,
+    "station": "Management Station 1 (SPMM)",
+    "candidate": "A 45-year-old man with alcohol dependence has been admitted to the ward. The nursing staff ask you to explain how you will manage his alcohol withdrawal.",
+    "roleplayer": "You are the nurse on duty. You want clear advice about management.",
+    "script": {
+      "opening": "“Doctor, what’s the plan for his withdrawal?”"
+    }
+  },
+  {
+    "id": 42,
+    "station": "Management Station 2 (SPMM)",
+    "candidate": "A 32-year-old woman with schizophrenia refuses oral medication. The nursing staff want to know about depot antipsychotic treatment.",
+    "roleplayer": "You are the nurse. You want advice about depot.",
+    "script": {
+      "opening": "“Doctor, she won’t take her tablets. What next?”"
+    }
+  },
+  {
+    "id": 43,
+    "station": "Management Station 3 (SPMM)",
+    "candidate": "You are asked to review a patient with bipolar disorder on lithium. The junior doctor wants to know about monitoring.",
+    "roleplayer": "You are the junior doctor. You want clear advice.",
+    "script": {
+      "opening": "“Doctor, how do we monitor lithium?”"
+    }
+  },
+  {
+    "id": 44,
+    "station": "Management Station 4 (SPMM)",
+    "candidate": "A 27-year-old man with depression has not responded to SSRI treatment. Explain next steps to a colleague.",
+    "roleplayer": "You are the colleague.",
+    "script": {
+      "opening": "“She’s been on sertraline 6 weeks, no change. What do we do?”"
+    }
+  },
+  {
+    "id": 45,
+    "station": "Management Station 5 (SPMM)",
+    "candidate": "A 19-year-old student presents with anorexia nervosa. Explain management to her parents.",
+    "roleplayer": "You are the parent. You want advice.",
+    "script": {
+      "opening": "“Doctor, what can be done for her?”"
+    }
+  },
+  {
+    "id": 46,
+    "station": "Management Station 6 (SPMM)",
+    "candidate": "You are asked to explain ECT to a depressed patient who has not improved with medication.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“They said I might need ECT. What is it?”"
+    }
+  },
+  {
+    "id": 47,
+    "station": "Management Station 7 (SPMM)",
+    "candidate": "A 55-year-old man with schizophrenia has metabolic syndrome. Explain management to the junior doctor.",
+    "roleplayer": "You are the junior doctor.",
+    "script": {
+      "opening": "“Doctor, his sugar and cholesterol are high. What do we do?”"
+    }
+  },
+  {
+    "id": 48,
+    "station": "Management Station 8 (SPMM)",
+    "candidate": "You are asked to advise nursing staff about rapid tranquillisation for an acutely agitated patient.",
+    "roleplayer": "You are the nurse.",
+    "script": {
+      "opening": "“Doctor, he’s very aggressive. What do we give?”"
+    }
+  },
+  {
+    "id": 49,
+    "station": "Management Station 9 (SPMM)",
+    "candidate": "A 40-year-old woman with GAD asks about CBT. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“They said CBT might help me. What is it?”"
+    }
+  },
+  {
+    "id": 50,
+    "station": "Management Station 10 (SPMM)",
+    "candidate": "A 23-year-old man with first episode psychosis is starting antipsychotic medication. Explain side effects.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“What side effects should I expect?”"
+    }
+  },
+  {
+    "id": 51,
+    "station": "Management Station 11 (SPMM)",
+    "candidate": "A 30-year-old woman with postnatal depression asks about antidepressants while breastfeeding. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, can I take tablets while breastfeeding?”"
+    }
+  },
+  {
+    "id": 52,
+    "station": "Management Station 12 (SPMM)",
+    "candidate": "A 48-year-old man with alcohol dependence asks about relapse prevention medication. Explain options.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“What can stop me drinking again?”"
+    }
+  },
+  {
+    "id": 53,
+    "station": "Management Station 13 (SPMM)",
+    "candidate": "A 21-year-old student with panic disorder asks about medication. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“They say I need tablets. What kind?”"
+    }
+  },
+  {
+    "id": 54,
+    "station": "Management Station 14 (SPMM)",
+    "candidate": "A 70-year-old woman with Alzheimer’s disease — her son asks about donepezil. Explain.",
+    "roleplayer": "You are the son.",
+    "script": {
+      "opening": "“Doctor, will donepezil cure her?”"
+    }
+  },
+  {
+    "id": 55,
+    "station": "Management Station 15 (SPMM)",
+    "candidate": "A 36-year-old woman with OCD asks about exposure and response prevention (ERP). Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“What is ERP?”"
+    }
+  },
+  {
+    "id": 56,
+    "station": "Management Station 16 (SPMM)",
+    "candidate": "A 40-year-old man with schizophrenia is on clozapine. The nurse asks about blood monitoring.",
+    "roleplayer": "You are the nurse.",
+    "script": {
+      "opening": "“How often do we check his blood?”"
+    }
+  },
+  {
+    "id": 57,
+    "station": "Management Station 17 (SPMM)",
+    "candidate": "A 22-year-old woman with bulimia nervosa asks about fluoxetine. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will fluoxetine help my bingeing?”"
+    }
+  },
+  {
+    "id": 58,
+    "station": "Management Station 18 (SPMM)",
+    "candidate": "A 46-year-old man with schizophrenia asks about switching from typical to atypical antipsychotic. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, they want to change my tablets. Why?”"
+    }
+  },
+  {
+    "id": 59,
+    "station": "Management Station 19 (SPMM)",
+    "candidate": "A 28-year-old man with social anxiety asks about treatment. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, I can’t speak in public. What will help?”"
+    }
+  },
+  {
+    "id": 60,
+    "station": "Management Station 20 (SPMM)",
+    "candidate": "A 35-year-old woman with PTSD asks about treatment. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“I keep having flashbacks. What can help me?”"
+    }
+  },
+  {
+    "id": 61,
+    "station": "Management Station 21 (SPMM)",
+    "candidate": "A 42-year-old man with generalized anxiety disorder asks about pregabalin. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, they said I might get pregabalin. What is it?”"
+    }
+  },
+  {
+    "id": 62,
+    "station": "Management Station 22 (SPMM)",
+    "candidate": "A 29-year-old woman with schizophrenia is about to start clozapine. Explain to her.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Why do I need this new drug?”"
+    }
+  },
+  {
+    "id": 63,
+    "station": "Management Station 23 (SPMM)",
+    "candidate": "A 55-year-old man with alcohol misuse needs advice on detox medication. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, what tablets will help me stop drinking?”"
+    }
+  },
+  {
+    "id": 64,
+    "station": "Management Station 24 (SPMM)",
+    "candidate": "A 31-year-old woman with social phobia is about to start CBT. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“What’s CBT going to do for me?”"
+    }
+  },
+  {
+    "id": 65,
+    "station": "Management Station 25 (SPMM)",
+    "candidate": "A 47-year-old man with schizophrenia is refusing food due to persecutory delusions. Advise the nursing staff.",
+    "roleplayer": "You are the nurse.",
+    "script": {
+      "opening": "“He won’t eat. What do we do?”"
+    }
+  },
+  {
+    "id": 66,
+    "station": "Management Station 26 (SPMM)",
+    "candidate": "A 60-year-old woman with vascular dementia — her daughter asks about management.",
+    "roleplayer": "You are the daughter.",
+    "script": {
+      "opening": "“Doctor, can anything help her memory?”"
+    }
+  },
+  {
+    "id": 67,
+    "station": "Management Station 27 (SPMM)",
+    "candidate": "A 24-year-old man with first-episode psychosis asks about prognosis. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will I ever get better?”"
+    }
+  },
+  {
+    "id": 68,
+    "station": "Management Station 28 (SPMM)",
+    "candidate": "A 33-year-old woman with depression asks about psychological therapies. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“They said talking therapy might help. What’s available?”"
+    }
+  },
+  {
+    "id": 69,
+    "station": "Management Station 29 (SPMM)",
+    "candidate": "A 38-year-old man with schizophrenia is refusing medication due to side effects. Explain options.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, I can’t take these tablets. They make me stiff.”"
+    }
+  },
+  {
+    "id": 70,
+    "station": "Management Station 30 (SPMM)",
+    "candidate": "A 26-year-old woman with bipolar disorder asks about pregnancy risks. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, can I have a baby on these tablets?”"
+    }
+  },
+  {
+    "id": 71,
+    "station": "Management Station 31 (SPMM)",
+    "candidate": "A 44-year-old woman with schizophrenia on depot antipsychotic asks about side effects. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, this injection makes me stiff. Why?”"
+    }
+  },
+  {
+    "id": 72,
+    "station": "Management Station 32 (SPMM)",
+    "candidate": "A 19-year-old student with first depressive episode asks about CBT. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, what is CBT?”"
+    }
+  },
+  {
+    "id": 73,
+    "station": "Management Station 33 (SPMM)",
+    "candidate": "A 61-year-old man with Parkinson’s disease has psychotic symptoms. Explain management.",
+    "roleplayer": "You are the patient’s wife.",
+    "script": {
+      "opening": "“Doctor, he sees things at night. What can help?”"
+    }
+  },
+  {
+    "id": 74,
+    "station": "Management Station 34 (SPMM)",
+    "candidate": "A 25-year-old woman with anorexia nervosa asks about treatment. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will I need to go to hospital?”"
+    }
+  },
+  {
+    "id": 75,
+    "station": "Management Station 35 (SPMM)",
+    "candidate": "A 32-year-old man with social phobia is offered group therapy. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, I can’t speak in groups. How will this help?”"
+    }
+  },
+  {
+    "id": 76,
+    "station": "Management Station 36 (SPMM)",
+    "candidate": "A 58-year-old woman with chronic schizophrenia asks about ECT. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, what is ECT?”"
+    }
+  },
+  {
+    "id": 77,
+    "station": "Management Station 37 (SPMM)",
+    "candidate": "A 40-year-old man with depression asks about mindfulness. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, what’s mindfulness?”"
+    }
+  },
+  {
+    "id": 78,
+    "station": "Management Station 38 (SPMM)",
+    "candidate": "A 27-year-old woman with schizophrenia wants to stop depot injections. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, I don’t want injections anymore.”"
+    }
+  },
+  {
+    "id": 79,
+    "station": "Management Station 39 (SPMM)",
+    "candidate": "A 35-year-old woman with GAD asks about buspirone. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“What’s buspirone?”"
+    }
+  },
+  {
+    "id": 80,
+    "station": "Management Station 40 (SPMM)",
+    "candidate": "A 52-year-old man with depression asks about ECT. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will ECT cure me?”"
+    }
+  },
+  {
+    "id": 81,
+    "station": "Management Station 41 (SPMM)",
+    "candidate": "A 47-year-old woman with bipolar disorder asks about lithium monitoring. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, why do I need so many blood tests?”"
+    }
+  },
+  {
+    "id": 82,
+    "station": "Management Station 42 (SPMM)",
+    "candidate": "A 30-year-old man with panic disorder asks about SSRIs. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“They said I need antidepressants. Why?”"
+    }
+  },
+  {
+    "id": 83,
+    "station": "Management Station 43 (SPMM)",
+    "candidate": "A 70-year-old woman with Alzheimer’s disease — her son asks about donepezil.",
+    "roleplayer": "You are the son.",
+    "script": {
+      "opening": "“Doctor, will this tablet cure her memory loss?”"
+    }
+  },
+  {
+    "id": 84,
+    "station": "Management Station 44 (SPMM)",
+    "candidate": "A 55-year-old man with alcohol dependence asks about acamprosate. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, what’s this acamprosate for?”"
+    }
+  },
+  {
+    "id": 85,
+    "station": "Management Station 45 (SPMM)",
+    "candidate": "A 33-year-old woman with OCD asks about exposure and response prevention (ERP). Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“What is ERP?”"
+    }
+  },
+  {
+    "id": 86,
+    "station": "Management Station 46 (SPMM)",
+    "candidate": "A 38-year-old man with depression asks about rTMS. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, what is magnetic therapy?”"
+    }
+  },
+  {
+    "id": 87,
+    "station": "Management Station 47 (SPMM)",
+    "candidate": "A 41-year-old man with schizophrenia asks about depot vs oral antipsychotics. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, why can’t I just take tablets?”"
+    }
+  },
+  {
+    "id": 88,
+    "station": "Management Station 48 (SPMM)",
+    "candidate": "A 50-year-old man with opioid dependence asks about methadone vs buprenorphine. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, which one is better?”"
+    }
+  },
+  {
+    "id": 89,
+    "station": "Management Station 49 (SPMM)",
+    "candidate": "A 27-year-old woman with postpartum depression asks about sertraline. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, is this safe while I breastfeed?”",
+      "sleep": "If candidate explains → “Will my baby be sleepy?”"
+    }
+  },
+  {
+    "id": 90,
+    "station": "Management Station 50 (SPMM)",
+    "candidate": "A 62-year-old man with recurrent depression asks about maintenance ECT. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, do I need shocks every month?”"
+    }
+  },
+  {
+    "id": 91,
+    "station": "Management Station 51 (SPMM)",
+    "candidate": "A 29-year-old man with schizophrenia asks about clozapine monitoring. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, why so many blood tests with this tablet?”"
+    }
+  },
+  {
+    "id": 92,
+    "station": "Management Station 52 (SPMM)",
+    "candidate": "A 36-year-old woman with panic disorder asks about benzodiazepines. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, can you give me something strong for my panic?”"
+    }
+  },
+  {
+    "id": 93,
+    "station": "Management Station 53 (SPMM)",
+    "candidate": "A 48-year-old man with alcohol dependence asks about disulfiram. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will this tablet stop me drinking?”"
+    }
+  },
+  {
+    "id": 94,
+    "station": "Management Station 54 (SPMM)",
+    "candidate": "A 22-year-old student with ADHD asks about methylphenidate. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, how does this tablet help me study?”",
+      "sleep": "If candidate mentions side effects → “Why does it make me lose sleep?”",
+      "appetite": "Discuss side effects (insomnia, appetite loss)."
+    }
+  },
+  {
+    "id": 95,
+    "station": "Management Station 55 (SPMM)",
+    "candidate": "A 67-year-old woman with vascular dementia asks about memantine. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will this medicine cure my memory?”"
+    }
+  },
+  {
+    "id": 96,
+    "station": "Management Station 56 (SPMM)",
+    "candidate": "A 39-year-old man with OCD asks about SSRIs. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, how do these tablets help my obsessions?”"
+    }
+  },
+  {
+    "id": 97,
+    "station": "Management Station 57 (SPMM)",
+    "candidate": "A 26-year-old woman with GAD asks about propranolol. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, how will this tablet stop my anxiety?”"
+    }
+  },
+  {
+    "id": 98,
+    "station": "Management Station 58 (SPMM)",
+    "candidate": "A 30-year-old man with schizophrenia asks about risperidone side effects.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will this tablet make me fat?”"
+    }
+  },
+  {
+    "id": 99,
+    "station": "Management Station 59 (SPMM)",
+    "candidate": "A 42-year-old woman with recurrent depression asks about maintenance antidepressants. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, why do I need tablets even when I feel fine?”"
+    }
+  },
+  {
+    "id": 100,
+    "station": "Management Station 60 (SPMM)",
+    "candidate": "A 34-year-old man with schizophrenia asks about olanzapine.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, this tablet makes me so hungry.”"
+    }
+  },
+  {
+    "id": 101,
+    "station": "Management Station 61 (SPMM)",
+    "candidate": "A 45-year-old woman with schizoaffective disorder asks about mood stabilisers. Explain.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, why do I need two medicines?”",
+      "mood": "Explain schizoaffective requires antipsychotic + mood stabiliser."
+    }
+  },
+  {
+    "id": 102,
+    "station": "Management Station 62 (SPMM)",
+    "candidate": "A 29-year-old man with depression asks about CBT.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, how will talking help me?”"
+    }
+  },
+  {
+    "id": 103,
+    "station": "Management Station 63 (SPMM)",
+    "candidate": "A 31-year-old woman with social anxiety asks about beta-blockers.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, can this help me speak in public?”"
+    }
+  },
+  {
+    "id": 104,
+    "station": "Management Station 64 (SPMM)",
+    "candidate": "A 56-year-old man with recurrent depression asks about ECT.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will this electric shock cure me?”"
+    }
+  },
+  {
+    "id": 105,
+    "station": "Management Station 65 (SPMM)",
+    "candidate": "A 40-year-old woman with borderline personality disorder asks about DBT.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, what is this therapy?”"
+    }
+  },
+  {
+    "id": 106,
+    "station": "Management Station 66 (SPMM)",
+    "candidate": "A 25-year-old man with schizophrenia asks about CBT for psychosis.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, how will talking help my voices?”"
+    }
+  },
+  {
+    "id": 107,
+    "station": "Management Station 67 (SPMM)",
+    "candidate": "A 63-year-old man with Lewy body dementia asks about rivastigmine.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, will this tablet stop my hallucinations?”"
+    }
+  },
+  {
+    "id": 108,
+    "station": "Management Station 68 (SPMM)",
+    "candidate": "A 22-year-old woman with anorexia asks about family therapy.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, why involve my family?”"
+    }
+  },
+  {
+    "id": 109,
+    "station": "Management Station 69 (SPMM)",
+    "candidate": "A 46-year-old man with schizophrenia asks about relapse prevention.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, why do I need tablets when I feel fine?”"
+    }
+  },
+  {
+    "id": 110,
+    "station": "Management Station 70 (SPMM)",
+    "candidate": "A 39-year-old woman with depression asks about exercise therapy.",
+    "roleplayer": "You are the patient.",
+    "script": {
+      "opening": "“Doctor, how can exercise help my mood?”",
+      "mood": "Explain exercise improves mood."
+    }
+  },
+  {
+    "id": 111,
+    "station": "Examination Station 1 (SPMM)",
+    "candidate": "You are asked to carry out a Mini Mental State Examination (MMSE) on a 72-year-old man referred for memory problems.",
+    "roleplayer": "You are the patient. You are forgetful, mildly anxious, but cooperative. Answer as instructed on MMSE.",
+    "script": {}
+  },
+  {
+    "id": 112,
+    "station": "Examination Station 2 (SPMM)",
+    "candidate": "Carry out a risk assessment in a 28-year-old man admitted with self-harm.",
+    "roleplayer": "You are the patient. You cut your wrists after an argument. You feel low and hopeless.",
+    "script": {
+      "opening": "“I just don’t see the point of living.”"
+    }
+  },
+  {
+    "id": 113,
+    "station": "Examination Station 3 (SPMM)",
+    "candidate": "Perform a cognitive examination on a 65-year-old woman with confusion.",
+    "roleplayer": "You are the patient. Disoriented, poor short-term memory, fluctuating attention.",
+    "script": {}
+  },
+  {
+    "id": 114,
+    "station": "Examination Station 4 (SPMM)",
+    "candidate": "You are asked to carry out a mental state examination (MSE) on a 35-year-old man with suspected schizophrenia.",
+    "roleplayer": "You are the patient. You hear voices, feel persecuted, disorganised.",
+    "script": {
+      "opening": "“They are watching me, doctor.”",
+      "mood": "appearance, behaviour, speech, mood, thought, perception, cognition, insight."
+    }
+  },
+  {
+    "id": 115,
+    "station": "Examination Station 5 (SPMM)",
+    "candidate": "Carry out an alcohol history and examination in a 44-year-old man.",
+    "roleplayer": "You are the patient. You drink 1 bottle of whisky daily. Tremulous, anxious, sweating.",
+    "script": {
+      "opening": "“I just need a drink to steady my nerves.”"
+    }
+  },
+  {
+    "id": 116,
+    "station": "Examination Station 6 (SPMM)",
+    "candidate": "Carry out a risk assessment for harm to others in a 26-year-old man arrested after assault.",
+    "roleplayer": "You are the patient. Angry, guarded, blames others.",
+    "script": {
+      "opening": "“They provoked me, I had to hit them.”"
+    }
+  },
+  {
+    "id": 117,
+    "station": "Examination Station 7 (SPMM)",
+    "candidate": "Carry out a capacity assessment in a 70-year-old woman refusing treatment for pneumonia.",
+    "roleplayer": "You are the patient. Breathless, confused, refuses hospital.",
+    "script": {
+      "opening": "“I just want to go home, leave me alone.”"
+    }
+  },
+  {
+    "id": 118,
+    "station": "Examination Station 8 (SPMM)",
+    "candidate": "Carry out a cognitive exam for dementia screening in a 79-year-old man.",
+    "roleplayer": "You are the patient. Memory loss, impaired attention, repeats questions.",
+    "script": {
+      "opening": "“Doctor, I keep forgetting where I put things.”"
+    }
+  },
+  {
+    "id": 119,
+    "station": "Examination Station 9 (SPMM)",
+    "candidate": "You are asked to conduct an extrapyramidal side effects examination in a 52-year-old man on haloperidol.",
+    "roleplayer": "You are the patient. Stiff, tremulous, restless.",
+    "script": {}
+  },
+  {
+    "id": 120,
+    "station": "Examination Station 10 (SPMM)",
+    "candidate": "Carry out a MSE focusing on mood and risk in a 19-year-old student with depression.",
+    "roleplayer": "You are the patient. Low mood, poor sleep, hopeless.",
+    "script": {
+      "opening": "“I just don’t see the point in anything.”",
+      "mood": "Explore mood, biological symptoms."
+    }
+  },
+  {
+    "id": 121,
+    "station": "Examination Station 11 (SPMM)",
+    "candidate": "Perform an MSE on a 48-year-old man referred with suspected mania.",
+    "roleplayer": "You are the patient. Elated, pressured speech, grandiose ideas.",
+    "script": {
+      "opening": "“Doctor, I’ve discovered a cure for cancer!”",
+      "sleep": "If asked about sleep → “I don’t need any, I’m full of energy.”",
+      "mood": "Assess mood, thought form/content, perception, cognition, insight."
+    }
+  },
+  {
+    "id": 122,
+    "station": "Examination Station 12 (SPMM)",
+    "candidate": "Carry out a risk assessment in a 22-year-old woman with eating disorder.",
+    "roleplayer": "You are the patient. Extremely underweight, denies illness, irritable.",
+    "script": {
+      "opening": "“I don’t see what the fuss is about, I’m fine.”"
+    }
+  },
+  {
+    "id": 123,
+    "station": "Examination Station 13 (SPMM)",
+    "candidate": "Conduct an MSE on a 40-year-old woman referred for OCD.",
+    "roleplayer": "You are the patient. Repeated hand-washer, anxious.",
+    "script": {
+      "opening": "“I can’t stop washing my hands.”"
+    }
+  },
+  {
+    "id": 124,
+    "station": "Examination Station 14 (SPMM)",
+    "candidate": "Perform a mental state exam on a 32-year-old man with suspected depression.",
+    "roleplayer": "You are the patient. Flat, withdrawn, poor concentration.",
+    "script": {
+      "opening": "“Everything feels pointless.”",
+      "sleep": "If asked about sleep → “I wake up early, exhausted.”",
+      "mood": "Assess mood, thought, risk."
+    }
+  },
+  {
+    "id": 125,
+    "station": "Examination Station 15 (SPMM)",
+    "candidate": "Carry out an assessment of extrapyramidal side effects in a 62-year-old man on risperidone.",
+    "roleplayer": "You are the patient. Stiff, slow, has tremor.",
+    "script": {}
+  },
+  {
+    "id": 126,
+    "station": "Examination Station 16 (SPMM)",
+    "candidate": "Perform an MSE on a 19-year-old university student with suspected cannabis-induced psychosis.",
+    "roleplayer": "You are the patient. Paranoid, distracted, irritable.",
+    "script": {
+      "opening": "“Everyone’s out to get me.”"
+    }
+  },
+  {
+    "id": 127,
+    "station": "Examination Station 17 (SPMM)",
+    "candidate": "Perform a risk assessment in a 47-year-old man with alcohol dependence.",
+    "roleplayer": "You are the patient. Admits heavy drinking, but minimises problems.",
+    "script": {
+      "opening": "“I just enjoy a drink, it’s no big deal.”"
+    }
+  },
+  {
+    "id": 128,
+    "station": "Examination Station 18 (SPMM)",
+    "candidate": "Conduct a mental state exam in a 55-year-old woman with suspected dementia.",
+    "roleplayer": "You are the patient. Memory loss, disoriented, anxious.",
+    "script": {
+      "opening": "“I keep forgetting names, even of my children.”",
+      "mood": "Assess orientation, memory, language, mood."
+    }
+  },
+  {
+    "id": 129,
+    "station": "Examination Station 19 (SPMM)",
+    "candidate": "Perform an MSE in a 25-year-old man with suspected GAD.",
+    "roleplayer": "You are the patient. Anxious, tense, excessive worrying.",
+    "script": {
+      "opening": "“I can’t stop worrying about everything.”",
+      "sleep": "If asked about sleep → “I struggle to fall asleep.”"
+    }
+  },
+  {
+    "id": 130,
+    "station": "Examination Station 20 (SPMM)",
+    "candidate": "Perform a risk assessment in a 36-year-old woman with postnatal depression.",
+    "roleplayer": "You are the patient. Tearful, guilty, overwhelmed.",
+    "script": {
+      "opening": "“I don’t think I’m a good mother.”"
+    }
+  },
+  {
+    "id": 131,
+    "station": "Examination Station 21 (SPMM)",
+    "candidate": "Carry out a cognitive exam in a 69-year-old man with suspected delirium.",
+    "roleplayer": "You are the patient. Fluctuating awareness, disoriented, distracted.",
+    "script": {
+      "opening": "“What day is it? Where am I?”"
+    }
+  },
+  {
+    "id": 132,
+    "station": "Examination Station 22 (SPMM)",
+    "candidate": "Perform an MSE in a 24-year-old woman with panic disorder.",
+    "roleplayer": "You are the patient. Anxious, fearful, describes panic attacks.",
+    "script": {
+      "opening": "“My heart races and I feel I can’t breathe.”"
+    }
+  },
+  {
+    "id": 133,
+    "station": "Examination Station 23 (SPMM)",
+    "candidate": "Carry out an examination for tardive dyskinesia in a 58-year-old man on long-term antipsychotics.",
+    "roleplayer": "You are the patient. Facial grimacing, tongue movements, choreiform hand movements.",
+    "script": {}
+  },
+  {
+    "id": 134,
+    "station": "Examination Station 24 (SPMM)",
+    "candidate": "Conduct an MSE in a 33-year-old woman with suspected PTSD.",
+    "roleplayer": "You are the patient. Hypervigilant, intrusive memories, nightmares.",
+    "script": {
+      "opening": "“I keep reliving that night.”",
+      "sleep": "If asked about sleep → “I have nightmares.”"
+    }
+  },
+  {
+    "id": 135,
+    "station": "Examination Station 25 (SPMM)",
+    "candidate": "Carry out a risk assessment in a 45-year-old man with bipolar depression.",
+    "roleplayer": "You are the patient. Low mood, guilt, suicidal thoughts.",
+    "script": {
+      "opening": "“I’ve ruined everything.”"
+    }
+  },
+  {
+    "id": 136,
+    "station": "Examination Station 26 (SPMM)",
+    "candidate": "Perform a cognitive assessment on a 75-year-old woman with memory problems.",
+    "roleplayer": "You are the patient. Repeats questions, poor short-term recall, mildly anxious.",
+    "script": {
+      "opening": "“I forget things all the time.”"
+    }
+  },
+  {
+    "id": 137,
+    "station": "Examination Station 27 (SPMM)",
+    "candidate": "Conduct an MSE in a 30-year-old man with suspected social anxiety.",
+    "roleplayer": "You are the patient. Anxious, avoids social contact, fears embarrassment.",
+    "script": {
+      "opening": "“I panic when I have to speak in public.”"
+    }
+  },
+  {
+    "id": 138,
+    "station": "Examination Station 28 (SPMM)",
+    "candidate": "Perform a risk assessment in a 52-year-old woman with schizophrenia.",
+    "roleplayer": "You are the patient. Paranoid, hostile, poor insight.",
+    "script": {
+      "opening": "“The neighbours are plotting to kill me.”"
+    }
+  },
+  {
+    "id": 139,
+    "station": "Examination Station 29 (SPMM)",
+    "candidate": "Carry out an examination for akathisia in a 41-year-old man on antipsychotics.",
+    "roleplayer": "You are the patient. Restless, unable to sit still, constantly moving legs.",
+    "script": {}
+  },
+  {
+    "id": 140,
+    "station": "Examination Station 30 (SPMM)",
+    "candidate": "Conduct an MSE in a 27-year-old woman with suspected borderline personality disorder.",
+    "roleplayer": "You are the patient. Emotional, impulsive, self-harm history.",
+    "script": {
+      "opening": "“I can’t cope with being abandoned.”",
+      "mood": "Explore mood instability."
+    }
+  },
+  {
+    "id": 141,
+    "station": "Examination Station 31 (SPMM)",
+    "candidate": "Conduct an MSE in a 22-year-old man with suspected schizophrenia.",
+    "roleplayer": "You are the patient. Guarded, paranoid, auditory hallucinations.",
+    "script": {
+      "opening": "“They keep talking about me.”"
+    }
+  },
+  {
+    "id": 142,
+    "station": "Examination Station 32 (SPMM)",
+    "candidate": "Carry out a cognitive assessment in a 70-year-old woman with suspected Alzheimer’s disease.",
+    "roleplayer": "You are the patient. Memory impaired, repeats questions, anxious.",
+    "script": {
+      "opening": "“I forget everything these days.”"
+    }
+  },
+  {
+    "id": 143,
+    "station": "Examination Station 33 (SPMM)",
+    "candidate": "Perform a risk assessment in a 30-year-old woman with self-harm.",
+    "roleplayer": "You are the patient. Tearful, recent overdose, ambivalent about living.",
+    "script": {
+      "opening": "“I took the tablets because I didn’t want to live.”"
+    }
+  },
+  {
+    "id": 144,
+    "station": "Examination Station 34 (SPMM)",
+    "candidate": "Conduct an MSE in a 38-year-old man with suspected bipolar mania.",
+    "roleplayer": "You are the patient. Elated, pressured speech, distractible.",
+    "script": {
+      "opening": "“I’m going to be the next Prime Minister!”",
+      "sleep": "If asked about sleep → “I don’t sleep at all.”"
+    }
+  },
+  {
+    "id": 145,
+    "station": "Examination Station 35 (SPMM)",
+    "candidate": "Carry out a risk assessment in a 50-year-old man with alcohol misuse.",
+    "roleplayer": "You are the patient. Drinks heavily, minimises problems, has blackouts.",
+    "script": {
+      "opening": "“I just like to drink, it helps me relax.”"
+    }
+  },
+  {
+    "id": 146,
+    "station": "Examination Station 36 (SPMM)",
+    "candidate": "Perform a mental state exam on a 44-year-old woman with suspected GAD.",
+    "roleplayer": "You are the patient. Anxious, constant worry, somatic symptoms.",
+    "script": {
+      "opening": "“I worry about everything, all the time.”",
+      "sleep": "If asked about sleep → “I can’t fall asleep.”"
+    }
+  },
+  {
+    "id": 147,
+    "station": "Examination Station 37 (SPMM)",
+    "candidate": "Carry out an assessment for side effects of antipsychotics in a 58-year-old man.",
+    "roleplayer": "You are the patient. Has tremor, rigidity, akathisia.",
+    "script": {}
+  },
+  {
+    "id": 148,
+    "station": "Examination Station 38 (SPMM)",
+    "candidate": "Perform an MSE in a 28-year-old woman with suspected panic disorder.",
+    "roleplayer": "You are the patient. Recurrent panic attacks, fearful, avoids travel.",
+    "script": {
+      "opening": "“I feel like I’m going to die when it happens.”"
+    }
+  },
+  {
+    "id": 149,
+    "station": "Examination Station 39 (SPMM)",
+    "candidate": "Carry out a cognitive assessment in a 72-year-old man with vascular dementia.",
+    "roleplayer": "You are the patient. Stepwise decline, memory loss, poor concentration.",
+    "script": {
+      "opening": "“I forget things more and more.”"
+    }
+  },
+  {
+    "id": 150,
+    "station": "Examination Station 40 (SPMM)",
+    "candidate": "Perform a risk assessment in a 29-year-old woman with anorexia nervosa.",
+    "roleplayer": "You are the patient. Very underweight, denies problem, irritable.",
+    "script": {
+      "opening": "“I’m fine, I don’t know why I’m here.”"
+    }
+  },
+  {
+    "id": 151,
+    "station": "History Taking Station 1 (Maudsley)",
+    "candidate": "Take a history from a 24-year-old man who has presented with low mood.",
+    "roleplayer": "You are the patient. You feel sad, lack motivation, poor sleep, guilt.",
+    "script": {
+      "opening": "“I just don’t see the point in anything.”",
+      "appetite": "If asked about appetite → “I’ve lost weight.”"
+    }
+  },
+  {
+    "id": 152,
+    "station": "History Taking Station 2 (Maudsley)",
+    "candidate": "Take a history from a 32-year-old woman with auditory hallucinations.",
+    "roleplayer": "You are the patient. You hear voices commenting on your actions.",
+    "script": {
+      "opening": "“They keep talking about me.”"
+    }
+  },
+  {
+    "id": 153,
+    "station": "History Taking Station 3 (Maudsley)",
+    "candidate": "Take a history from a 19-year-old student presenting with panic attacks.",
+    "roleplayer": "You are the patient. Sudden anxiety, palpitations, fear of dying.",
+    "script": {
+      "opening": "“It feels like I can’t breathe.”"
+    }
+  },
+  {
+    "id": 154,
+    "station": "History Taking Station 4 (Maudsley)",
+    "candidate": "Take a history from a 60-year-old man with memory loss.",
+    "roleplayer": "You are the patient. Progressive forgetfulness, disoriented, repeats questions.",
+    "script": {
+      "opening": "“I keep forgetting things.”"
+    }
+  },
+  {
+    "id": 155,
+    "station": "History Taking Station 5 (Maudsley)",
+    "candidate": "Take a history from a 28-year-old woman with suspected OCD.",
+    "roleplayer": "You are the patient. Obsessions about contamination, compulsive washing.",
+    "script": {
+      "opening": "“I wash my hands 50 times a day.”"
+    }
+  },
+  {
+    "id": 156,
+    "station": "History Taking Station 6 (Maudsley)",
+    "candidate": "Take a history from a 42-year-old man presenting with alcohol misuse.",
+    "roleplayer": "You are the patient. Drinks heavily, blackouts, denies problem initially.",
+    "script": {
+      "opening": "“I only drink to relax.”"
+    }
+  },
+  {
+    "id": 157,
+    "station": "History Taking Station 7 (Maudsley)",
+    "candidate": "Take a history from a 36-year-old woman presenting with PTSD.",
+    "roleplayer": "You are the patient. Survived a traumatic assault, flashbacks, nightmares.",
+    "script": {
+      "opening": "“I can’t stop seeing it happen again.”",
+      "sleep": "If asked about sleep → “I wake up screaming.”"
+    }
+  },
+  {
+    "id": 158,
+    "station": "History Taking Station 8 (Maudsley)",
+    "candidate": "Take a history from a 55-year-old man with persecutory delusions.",
+    "roleplayer": "You are the patient. Convinced neighbours are spying on you.",
+    "script": {
+      "opening": "“They’ve put cameras in my house.”"
+    }
+  },
+  {
+    "id": 159,
+    "station": "History Taking Station 9 (Maudsley)",
+    "candidate": "Take a history from a 30-year-old woman with anorexia nervosa.",
+    "roleplayer": "You are the patient. Restricts food, denies problem, very underweight.",
+    "script": {
+      "opening": "“I don’t think I’m thin, I’m still fat.”"
+    }
+  },
+  {
+    "id": 160,
+    "station": "History Taking Station 10 (Maudsley)",
+    "candidate": "Take a history from a 47-year-old man with suspected depression and psychotic features.",
+    "roleplayer": "You are the patient. Low mood, guilt, nihilistic delusions.",
+    "script": {
+      "opening": "“I’m already dead inside.”"
+    }
+  },
+  {
+    "id": 161,
+    "station": "History Taking Station 11 (Maudsley)",
+    "candidate": "Take a history from a 40-year-old woman with chronic insomnia.",
+    "roleplayer": "You are the patient. Difficulty falling asleep, frequent waking, daytime fatigue.",
+    "script": {
+      "opening": "“I’m exhausted, I can never sleep.”"
+    }
+  },
+  {
+    "id": 162,
+    "station": "History Taking Station 12 (Maudsley)",
+    "candidate": "Take a history from a 21-year-old university student with social anxiety.",
+    "roleplayer": "You are the patient. Fear of speaking in groups, avoids social events.",
+    "script": {
+      "opening": "“I can’t even order food in a café.”"
+    }
+  },
+  {
+    "id": 163,
+    "station": "History Taking Station 13 (Maudsley)",
+    "candidate": "Take a history from a 29-year-old man with suspected hypomania.",
+    "roleplayer": "You are the patient. Elevated mood, increased energy, impulsive.",
+    "script": {
+      "opening": "“I feel amazing, better than ever!”",
+      "sleep": "If asked about sleep → “I only need 3 hours.”"
+    }
+  },
+  {
+    "id": 164,
+    "station": "History Taking Station 14 (Maudsley)",
+    "candidate": "Take a history from a 65-year-old man with confusion and sudden onset memory problems.",
+    "roleplayer": "You are the patient. Disoriented, fluctuating attention, visual hallucinations.",
+    "script": {
+      "opening": "“The walls are moving.”"
+    }
+  },
+  {
+    "id": 165,
+    "station": "History Taking Station 15 (Maudsley)",
+    "candidate": "Take a history from a 27-year-old woman with suspected borderline personality disorder.",
+    "roleplayer": "You are the patient. Intense relationships, self-harm, mood swings.",
+    "script": {
+      "opening": "“People always leave me, I hate myself.”",
+      "mood": "If asked about mood → “It changes all the time.”"
+    }
+  },
+  {
+    "id": 166,
+    "station": "History Taking Station 16 (Maudsley)",
+    "candidate": "Take a history from a 45-year-old man with chronic pain and low mood.",
+    "roleplayer": "You are the patient. Longstanding back pain, depressed, opioid use.",
+    "script": {
+      "opening": "“The pain never stops, it’s ruining my life.”",
+      "mood": "If asked about mood → “I feel hopeless.”"
+    }
+  },
+  {
+    "id": 167,
+    "station": "History Taking Station 17 (Maudsley)",
+    "candidate": "Take a history from a 70-year-old woman with visual hallucinations.",
+    "roleplayer": "You are the patient. Sees people in her room, Parkinsonism present.",
+    "script": {
+      "opening": "“There are strangers sitting on my bed.”"
+    }
+  },
+  {
+    "id": 168,
+    "station": "History Taking Station 18 (Maudsley)",
+    "candidate": "Take a history from a 25-year-old man with suspected schizophrenia.",
+    "roleplayer": "You are the patient. Social withdrawal, neglect, thought disorder.",
+    "script": {
+      "opening": "“I don’t talk to people anymore.”"
+    }
+  },
+  {
+    "id": 169,
+    "station": "History Taking Station 19 (Maudsley)",
+    "candidate": "Take a history from a 33-year-old woman with suspected bipolar depression.",
+    "roleplayer": "You are the patient. Low mood, fatigue, past history of mania.",
+    "script": {
+      "opening": "“I can’t get out of bed.”"
+    }
+  },
+  {
+    "id": 170,
+    "station": "History Taking Station 20 (Maudsley)",
+    "candidate": "Take a history from a 41-year-old man with compulsive checking behaviours.",
+    "roleplayer": "You are the patient. Obsession about safety, checks locks repeatedly.",
+    "script": {
+      "opening": "“I check the door 20 times before bed.”"
+    }
+  },
+  {
+    "id": 171,
+    "station": "History Taking Station 21 (Maudsley)",
+    "candidate": "Take a history from a 50-year-old woman presenting with generalised anxiety.",
+    "roleplayer": "You are the patient. Constant worry, tension, poor sleep.",
+    "script": {
+      "opening": "“I worry about everything, all the time.”",
+      "sleep": "If asked about sleep → “I toss and turn all night.”"
+    }
+  },
+  {
+    "id": 172,
+    "station": "History Taking Station 22 (Maudsley)",
+    "candidate": "Take a history from a 37-year-old man with anger outbursts and low mood.",
+    "roleplayer": "You are the patient. Irritable, frequent arguments, regret after.",
+    "script": {
+      "opening": "“I keep snapping at people.”",
+      "mood": "Explore mood and irritability."
+    }
+  },
+  {
+    "id": 173,
+    "station": "History Taking Station 23 (Maudsley)",
+    "candidate": "Take a history from a 26-year-old man with suspected ADHD.",
+    "roleplayer": "You are the patient. Poor focus, restlessness, impulsivity since childhood.",
+    "script": {
+      "opening": "“I can’t sit still or focus.”"
+    }
+  },
+  {
+    "id": 174,
+    "station": "History Taking Station 24 (Maudsley)",
+    "candidate": "Take a history from a 55-year-old man with suspected alcohol-related dementia.",
+    "roleplayer": "You are the patient. Memory loss, heavy drinking, disoriented.",
+    "script": {
+      "opening": "“I forget things after drinking.”"
+    }
+  },
+  {
+    "id": 175,
+    "station": "History Taking Station 25 (Maudsley)",
+    "candidate": "Take a history from a 30-year-old woman with postnatal depression.",
+    "roleplayer": "You are the patient. Tearful, guilt about being a mother, low energy.",
+    "script": {
+      "opening": "“I feel like I’m a bad mother.”",
+      "mood": "Explore mood symptoms."
+    }
+  },
+  {
+    "id": 176,
+    "station": "History Taking Station 26 (Maudsley)",
+    "candidate": "Take a history from a 43-year-old man presenting with pathological gambling.",
+    "roleplayer": "You are the patient. Spends excessive money, lies about gambling.",
+    "script": {
+      "opening": "“I keep losing money on betting.”"
+    }
+  },
+  {
+    "id": 177,
+    "station": "History Taking Station 27 (Maudsley)",
+    "candidate": "Take a history from a 67-year-old woman with suspected vascular dementia.",
+    "roleplayer": "You are the patient. Stepwise decline, hypertension history.",
+    "script": {
+      "opening": "“I get confused sometimes.”"
+    }
+  },
+  {
+    "id": 178,
+    "station": "History Taking Station 28 (Maudsley)",
+    "candidate": "Take a history from a 22-year-old man with suspected drug-induced psychosis.",
+    "roleplayer": "You are the patient. Hallucinations and paranoia after drug use.",
+    "script": {
+      "opening": "“They’re out to get me.”"
+    }
+  },
+  {
+    "id": 179,
+    "station": "History Taking Station 29 (Maudsley)",
+    "candidate": "Take a history from a 34-year-old woman with suspected somatisation disorder.",
+    "roleplayer": "You are the patient. Multiple physical complaints, repeated investigations.",
+    "script": {
+      "opening": "“I’m always in pain, but doctors find nothing.”",
+      "mood": "If asked about mood → “It makes me depressed.”"
+    }
+  },
+  {
+    "id": 180,
+    "station": "History Taking Station 30 (Maudsley)",
+    "candidate": "Take a history from a 46-year-old man with suspected PTSD after military service.",
+    "roleplayer": "You are the patient. Nightmares, flashbacks, hypervigilance.",
+    "script": {
+      "opening": "“I still hear the explosions in my head.”"
+    }
+  },
+  {
+    "id": 181,
+    "station": "History Taking Station 31 (Maudsley)",
+    "candidate": "Take a history from a 58-year-old woman with suspected obsessive-compulsive disorder.",
+    "roleplayer": "You are the patient. Repeated cleaning rituals, intrusive thoughts.",
+    "script": {
+      "opening": "“I wash my hands hundreds of times a day.”"
+    }
+  },
+  {
+    "id": 182,
+    "station": "History Taking Station 32 (Maudsley)",
+    "candidate": "Take a history from a 29-year-old man presenting with panic attacks.",
+    "roleplayer": "You are the patient. Sudden episodes of palpitations, sweating, fear of dying.",
+    "script": {
+      "opening": "“I thought I was having a heart attack.”"
+    }
+  },
+  {
+    "id": 183,
+    "station": "History Taking Station 33 (Maudsley)",
+    "candidate": "Take a history from a 35-year-old woman with suspected anorexia nervosa.",
+    "roleplayer": "You are the patient. Restricts food, fears weight gain, distorted body image.",
+    "script": {
+      "opening": "“I feel fat even though I’m thin.”"
+    }
+  },
+  {
+    "id": 184,
+    "station": "History Taking Station 34 (Maudsley)",
+    "candidate": "Take a history from a 42-year-old man with suspected generalized anxiety disorder.",
+    "roleplayer": "You are the patient. Constant worry, irritability, insomnia.",
+    "script": {
+      "opening": "“My mind never stops racing.”"
+    }
+  },
+  {
+    "id": 185,
+    "station": "History Taking Station 35 (Maudsley)",
+    "candidate": "Take a history from a 61-year-old man with suspected Parkinson’s disease dementia.",
+    "roleplayer": "You are the patient. Tremor, bradykinesia, hallucinations, cognitive decline.",
+    "script": {
+      "opening": "“I see people who aren’t there.”"
+    }
+  },
+  {
+    "id": 186,
+    "station": "History Taking Station 36 (Maudsley)",
+    "candidate": "Take a history from a 24-year-old man with suspected schizophrenia.",
+    "roleplayer": "You are the patient. Auditory hallucinations, delusions, neglect.",
+    "script": {
+      "opening": "“Voices keep calling me names.”"
+    }
+  },
+  {
+    "id": 187,
+    "station": "History Taking Station 37 (Maudsley)",
+    "candidate": "Take a history from a 48-year-old woman with suspected PTSD.",
+    "roleplayer": "You are the patient. Car accident, flashbacks, nightmares.",
+    "script": {
+      "opening": "“I relive the crash every night.”"
+    }
+  },
+  {
+    "id": 188,
+    "station": "History Taking Station 38 (Maudsley)",
+    "candidate": "Take a history from a 19-year-old woman with suspected bulimia nervosa.",
+    "roleplayer": "You are the patient. Binge eating, vomiting, guilt.",
+    "script": {
+      "opening": "“I eat loads, then make myself sick.”",
+      "guilt": "If asked about guilt → “I feel disgusted after.”"
+    }
+  },
+  {
+    "id": 189,
+    "station": "History Taking Station 39 (Maudsley)",
+    "candidate": "Take a history from a 56-year-old man with suspected alcohol dependence.",
+    "roleplayer": "You are the patient. Heavy daily drinking, withdrawal symptoms.",
+    "script": {
+      "opening": "“I can’t get through a day without alcohol.”"
+    }
+  },
+  {
+    "id": 190,
+    "station": "History Taking Station 40 (Maudsley)",
+    "candidate": "Take a history from a 23-year-old man with suspected cannabis-induced psychosis.",
+    "roleplayer": "You are the patient. Smokes daily, paranoid, hallucinations.",
+    "script": {
+      "opening": "“I feel like people are watching me.”"
+    }
+  },
+  {
+    "id": 191,
+    "station": "History Taking Station 31 (Maudsley)",
+    "candidate": "Take a history from a 58-year-old woman with suspected obsessive-compulsive disorder.",
+    "roleplayer": "You are the patient. Repeated cleaning rituals, intrusive thoughts.",
+    "script": {
+      "opening": "“I wash my hands hundreds of times a day.”"
+    }
+  },
+  {
+    "id": 192,
+    "station": "History Taking Station 32 (Maudsley)",
+    "candidate": "Take a history from a 29-year-old man presenting with panic attacks.",
+    "roleplayer": "You are the patient. Sudden episodes of palpitations, sweating, fear of dying.",
+    "script": {
+      "opening": "“I thought I was having a heart attack.”"
+    }
+  },
+  {
+    "id": 193,
+    "station": "History Taking Station 33 (Maudsley)",
+    "candidate": "Take a history from a 35-year-old woman with suspected anorexia nervosa.",
+    "roleplayer": "You are the patient. Restricts food, fears weight gain, distorted body image.",
+    "script": {
+      "opening": "“I feel fat even though I’m thin.”"
+    }
+  },
+  {
+    "id": 194,
+    "station": "History Taking Station 34 (Maudsley)",
+    "candidate": "Take a history from a 42-year-old man with suspected generalized anxiety disorder.",
+    "roleplayer": "You are the patient. Constant worry, irritability, insomnia.",
+    "script": {
+      "opening": "“My mind never stops racing.”"
+    }
+  },
+  {
+    "id": 195,
+    "station": "History Taking Station 35 (Maudsley)",
+    "candidate": "Take a history from a 61-year-old man with suspected Parkinson’s disease dementia.",
+    "roleplayer": "You are the patient. Tremor, bradykinesia, hallucinations, cognitive decline.",
+    "script": {
+      "opening": "“I see people who aren’t there.”"
+    }
+  },
+  {
+    "id": 196,
+    "station": "History Taking Station 36 (Maudsley)",
+    "candidate": "Take a history from a 24-year-old man with suspected schizophrenia.",
+    "roleplayer": "You are the patient. Auditory hallucinations, delusions, neglect.",
+    "script": {
+      "opening": "“Voices keep calling me names.”"
+    }
+  },
+  {
+    "id": 197,
+    "station": "History Taking Station 37 (Maudsley)",
+    "candidate": "Take a history from a 48-year-old woman with suspected PTSD.",
+    "roleplayer": "You are the patient. Car accident, flashbacks, nightmares.",
+    "script": {
+      "opening": "“I relive the crash every night.”"
+    }
+  },
+  {
+    "id": 198,
+    "station": "History Taking Station 38 (Maudsley)",
+    "candidate": "Take a history from a 19-year-old woman with suspected bulimia nervosa.",
+    "roleplayer": "You are the patient. Binge eating, vomiting, guilt.",
+    "script": {
+      "opening": "“I eat loads, then make myself sick.”",
+      "guilt": "If asked about guilt → “I feel disgusted after.”"
+    }
+  },
+  {
+    "id": 199,
+    "station": "History Taking Station 39 (Maudsley)",
+    "candidate": "Take a history from a 56-year-old man with suspected alcohol dependence.",
+    "roleplayer": "You are the patient. Heavy daily drinking, withdrawal symptoms.",
+    "script": {
+      "opening": "“I can’t get through a day without alcohol.”"
+    }
+  },
+  {
+    "id": 200,
+    "station": "History Taking Station 40 (Maudsley)",
+    "candidate": "Take a history from a 23-year-old man with suspected cannabis-induced psychosis.",
+    "roleplayer": "You are the patient. Smokes daily, paranoid, hallucinations.",
+    "script": {
+      "opening": "“I feel like people are watching me.”"
+    }
+  },
+  {
+    "id": 201,
+    "station": "Management Station 1 (Maudsley)",
+    "candidate": "You are asked to explain the side-effects of antipsychotic medication to a patient recently diagnosed with schizophrenia.",
+    "roleplayer": "You are the patient. Concerned about tablets, anxious about weight gain and long-term effects.",
+    "script": {
+      "opening": "“Do I really have to take these? I’m worried about side effects.”"
+    }
+  },
+  {
+    "id": 202,
+    "station": "Management Station 2 (Maudsley)",
+    "candidate": "Discuss lithium treatment with a patient with bipolar disorder starting medication.",
+    "roleplayer": "You are the patient. Curious but worried about blood tests and toxicity.",
+    "script": {
+      "opening": "“They said I need lithium. What does it actually do?”"
+    }
+  },
+  {
+    "id": 203,
+    "station": "Management Station 3 (Maudsley)",
+    "candidate": "You need to discuss ECT with a severely depressed patient who has not responded to antidepressants.",
+    "roleplayer": "You are the patient. Nervous, fearful of electricity.",
+    "script": {
+      "opening": "“Are they really going to shock my brain?”"
+    }
+  },
+  {
+    "id": 204,
+    "station": "Management Station 4 (Maudsley)",
+    "candidate": "Discuss clozapine with a patient with treatment-resistant schizophrenia.",
+    "roleplayer": "You are the patient. Resistant, multiple failed meds.",
+    "script": {
+      "opening": "“Why should I bother with another drug?”"
+    }
+  },
+  {
+    "id": 205,
+    "station": "Management Station 5 (Maudsley)",
+    "candidate": "Explain SSRIs to a patient with moderate depression starting treatment.",
+    "roleplayer": "You are the patient. Skeptical about tablets, afraid of side effects.",
+    "script": {
+      "opening": "“Do I really need antidepressants?”"
+    }
+  },
+  {
+    "id": 206,
+    "station": "Management Station 6 (Maudsley)",
+    "candidate": "Discuss risks of benzodiazepines with a patient requesting sleeping tablets.",
+    "roleplayer": "You are the patient. Insomniac, pushing for diazepam.",
+    "script": {
+      "opening": "“I just want something strong to knock me out.”"
+    }
+  },
+  {
+    "id": 207,
+    "station": "Management Station 7 (Maudsley)",
+    "candidate": "Explain depot antipsychotics to a patient with poor adherence.",
+    "roleplayer": "You are the patient. Forgetful, reluctant about injections.",
+    "script": {
+      "opening": "“Why do I need injections? Tablets are fine.”"
+    }
+  },
+  {
+    "id": 208,
+    "station": "Management Station 8 (Maudsley)",
+    "candidate": "Discuss alcohol detoxification with a patient requesting help.",
+    "roleplayer": "You are the patient. Daily drinker, fearful of withdrawal.",
+    "script": {
+      "opening": "“I can’t stop drinking, but I’m scared of what’ll happen if I do.”"
+    }
+  },
+  {
+    "id": 209,
+    "station": "Management Station 9 (Maudsley)",
+    "candidate": "Explain CBT to a patient with panic disorder.",
+    "roleplayer": "You are the patient. Wants quick fixes, unsure about therapy.",
+    "script": {
+      "opening": "“How can talking help when I feel I’m dying?”"
+    }
+  },
+  {
+    "id": 210,
+    "station": "Management Station 10 (Maudsley)",
+    "candidate": "Discuss relapse prevention with a patient recovering from psychosis.",
+    "roleplayer": "You are the patient. Anxious about relapse, wants reassurance.",
+    "script": {
+      "opening": "“How do I know it won’t come back?”"
+    }
+  },
+  {
+    "id": 211,
+    "station": "Management Station 11 (Maudsley)",
+    "candidate": "Explain valproate treatment to a woman with bipolar disorder.",
+    "roleplayer": "You are the patient. Concerned about pregnancy risks and long-term effects.",
+    "script": {
+      "opening": "“They said I might need valproate, but I’m thinking of having kids.”"
+    }
+  },
+  {
+    "id": 212,
+    "station": "Management Station 12 (Maudsley)",
+    "candidate": "Discuss psychological therapies with a patient with borderline personality disorder.",
+    "roleplayer": "You are the patient. Skeptical about therapy, wants medication.",
+    "script": {
+      "opening": "“I just want tablets, not endless talking.”"
+    }
+  },
+  {
+    "id": 213,
+    "station": "Management Station 13 (Maudsley)",
+    "candidate": "Explain antipsychotics to a mother whose son has just been diagnosed with schizophrenia.",
+    "roleplayer": "You are the mother. Worried about medication, side effects, prognosis.",
+    "script": {
+      "opening": "“Will these drugs change who he is?”"
+    }
+  },
+  {
+    "id": 214,
+    "station": "Management Station 14 (Maudsley)",
+    "candidate": "Discuss management of a patient with severe OCD resistant to SSRIs.",
+    "roleplayer": "You are the patient. Tired, hopeless.",
+    "script": {
+      "opening": "“I’ve tried all the tablets and nothing works.”"
+    }
+  },
+  {
+    "id": 215,
+    "station": "Management Station 15 (Maudsley)",
+    "candidate": "Explain antipsychotic side-effects to a patient with first-episode psychosis.",
+    "roleplayer": "You are the patient. Anxious about medication.",
+    "script": {
+      "opening": "“Do these tablets mess with my brain?”"
+    }
+  },
+  {
+    "id": 216,
+    "station": "Management Station 16 (Maudsley)",
+    "candidate": "Discuss relapse prevention plan with a patient with bipolar disorder.",
+    "roleplayer": "You are the patient. Relieved to feel better, anxious about future.",
+    "script": {
+      "opening": "“I don’t want to go through that again.”"
+    }
+  },
+  {
+    "id": 217,
+    "station": "Management Station 17 (Maudsley)",
+    "candidate": "Explain antipsychotic medication to a patient who refuses treatment after a psychotic episode.",
+    "roleplayer": "You are the patient. Suspicious of doctors, doesn’t trust meds.",
+    "script": {
+      "opening": "“I don’t need drugs. You’re trying to control me.”"
+    }
+  },
+  {
+    "id": 218,
+    "station": "Management Station 18 (Maudsley)",
+    "candidate": "Discuss use of antidepressants with a pregnant woman suffering depression.",
+    "roleplayer": "You are the patient. Worried about effects on baby.",
+    "script": {
+      "opening": "“I don’t want to harm my baby with tablets.”",
+      "sleep": "If asked about severity → “I can’t sleep or eat.”"
+    }
+  },
+  {
+    "id": 219,
+    "station": "Management Station 19 (Maudsley)",
+    "candidate": "Explain long-term management of schizophrenia to a patient.",
+    "roleplayer": "You are the patient. Resigned, seeking clarity.",
+    "script": {
+      "opening": "“So I’ll have this illness forever?”"
+    }
+  },
+  {
+    "id": 220,
+    "station": "Management Station 20 (Maudsley)",
+    "candidate": "Discuss side-effects of mood stabilizers with a patient newly diagnosed with bipolar disorder.",
+    "roleplayer": "You are the patient. Curious, cautious.",
+    "script": {
+      "opening": "“What exactly are mood stabilizers?”"
+    }
+  },
+  {
+    "id": 221,
+    "station": "Management Station 21 (Maudsley)",
+    "candidate": "Explain the role of antipsychotics in relapse prevention to a patient with schizophrenia.",
+    "roleplayer": "You are the patient. Anxious about side effects, reluctant to continue.",
+    "script": {
+      "opening": "“I feel fine now. Why should I keep taking these?”"
+    }
+  },
+  {
+    "id": 222,
+    "station": "Management Station 22 (Maudsley)",
+    "candidate": "Discuss psychological treatment options for PTSD with a veteran.",
+    "roleplayer": "You are the patient. Distressed, flashbacks, mistrustful.",
+    "script": {
+      "opening": "“I can’t sleep, I keep seeing things from the war.”"
+    }
+  },
+  {
+    "id": 223,
+    "station": "Management Station 23 (Maudsley)",
+    "candidate": "Explain antipsychotic medication to parents of a 16-year-old with first-episode psychosis.",
+    "roleplayer": "You are the parents. Anxious, confused, seeking clarity.",
+    "script": {
+      "opening": "“Will these drugs damage our child?”"
+    }
+  },
+  {
+    "id": 224,
+    "station": "Management Station 24 (Maudsley)",
+    "candidate": "Discuss antidepressant treatment options with a patient with recurrent depression.",
+    "roleplayer": "You are the patient. Tired of relapses, skeptical about meds.",
+    "script": {
+      "opening": "“I’m sick of these episodes coming back.”"
+    }
+  },
+  {
+    "id": 225,
+    "station": "Management Station 25 (Maudsley)",
+    "candidate": "Explain cognitive behavioural therapy to a patient with social anxiety disorder.",
+    "roleplayer": "You are the patient. Nervous, avoids social contact.",
+    "script": {
+      "opening": "“I can’t even walk into a room without panicking.”"
+    }
+  },
+  {
+    "id": 226,
+    "station": "Management Station 26 (Maudsley)",
+    "candidate": "Discuss treatment adherence with a patient with schizophrenia who frequently stops medication.",
+    "roleplayer": "You are the patient. Resistant, suspicious.",
+    "script": {
+      "opening": "“The meds make me feel like a zombie.”"
+    }
+  },
+  {
+    "id": 227,
+    "station": "Management Station 27 (Maudsley)",
+    "candidate": "Explain antipsychotic medication to a patient with psychosis who wants to stop.",
+    "roleplayer": "You are the patient. Insistent about stopping, seeking confirmation.",
+    "script": {
+      "opening": "“I don’t want these drugs anymore.”"
+    }
+  },
+  {
+    "id": 228,
+    "station": "Management Station 28 (Maudsley)",
+    "candidate": "Discuss risks and benefits of antipsychotics in pregnancy with a woman with schizophrenia.",
+    "roleplayer": "You are the patient. Pregnant, worried about harm to baby.",
+    "script": {
+      "opening": "“Will these tablets hurt my baby?”"
+    }
+  },
+  {
+    "id": 229,
+    "station": "Management Station 29 (Maudsley)",
+    "candidate": "Explain use of antipsychotics to a carer of a patient with chronic schizophrenia.",
+    "roleplayer": "You are the carer. Worried about dependence and side effects.",
+    "script": {
+      "opening": "“He’s been on these drugs for years. Isn’t that dangerous?”"
+    }
+  },
+  {
+    "id": 230,
+    "station": "Management Station 30 (Maudsley)",
+    "candidate": "Discuss side-effects of antidepressants with a young adult starting treatment.",
+    "roleplayer": "You are the patient. Anxious, inexperienced with medication.",
+    "script": {
+      "opening": "“I’ve never taken tablets before. Will they change me?”"
+    }
+  },
+  {
+    "id": 231,
+    "station": "Management Station 31 (Maudsley)",
+    "candidate": "Explain lithium monitoring to a patient newly prescribed lithium.",
+    "roleplayer": "You are the patient. Curious, slightly anxious.",
+    "script": {
+      "opening": "“They said I need blood tests. Why?”"
+    }
+  },
+  {
+    "id": 232,
+    "station": "Management Station 32 (Maudsley)",
+    "candidate": "Discuss psychological therapy options with a patient with depression.",
+    "roleplayer": "You are the patient. Low, hopeless.",
+    "script": {
+      "opening": "“I don’t think talking will help.”",
+      "mood": "If asked about mood → “I feel numb.”"
+    }
+  },
+  {
+    "id": 233,
+    "station": "Management Station 33 (Maudsley)",
+    "candidate": "Explain depot antipsychotics to a patient with schizophrenia.",
+    "roleplayer": "You are the patient. Skeptical, prefers tablets.",
+    "script": {
+      "opening": "“Why do I need an injection?”"
+    }
+  },
+  {
+    "id": 234,
+    "station": "Management Station 34 (Maudsley)",
+    "candidate": "Discuss management of insomnia with a patient with depression.",
+    "roleplayer": "You are the patient. Exhausted, irritable.",
+    "script": {
+      "opening": "“I can’t sleep at all.”",
+      "sleep": "Explore sleep hygiene."
+    }
+  },
+  {
+    "id": 235,
+    "station": "Management Station 35 (Maudsley)",
+    "candidate": "Explain ECT to a patient with severe depression.",
+    "roleplayer": "You are the patient. Frightened, misinformed.",
+    "script": {
+      "opening": "“Isn’t ECT like electric shocks?”"
+    }
+  },
+  {
+    "id": 236,
+    "station": "Management Station 36 (Maudsley)",
+    "candidate": "Discuss clozapine initiation with a patient with treatment-resistant schizophrenia.",
+    "roleplayer": "You are the patient. Wary of side effects.",
+    "script": {
+      "opening": "“They say this is the last option. Why?”"
+    }
+  },
+  {
+    "id": 237,
+    "station": "Management Station 37 (Maudsley)",
+    "candidate": "Explain relapse prevention to a patient with recurrent depression.",
+    "roleplayer": "You are the patient. Anxious about future episodes.",
+    "script": {
+      "opening": "“I don’t want this to keep happening.”"
+    }
+  },
+  {
+    "id": 238,
+    "station": "Management Station 38 (Maudsley)",
+    "candidate": "Discuss antipsychotics with a patient concerned about tardive dyskinesia.",
+    "roleplayer": "You are the patient. Worried, informed.",
+    "script": {
+      "opening": "“I heard these drugs can cause twitching.”"
+    }
+  },
+  {
+    "id": 239,
+    "station": "Management Station 39 (Maudsley)",
+    "candidate": "Explain psychological therapy for eating disorders to a patient.",
+    "roleplayer": "You are the patient. Resistant, defensive.",
+    "script": {
+      "opening": "“I don’t need therapy, I just want to lose weight.”"
+    }
+  },
+  {
+    "id": 240,
+    "station": "Management Station 40 (Maudsley)",
+    "candidate": "Discuss side-effects of antidepressants with a patient starting SSRIs.",
+    "roleplayer": "You are the patient. Curious but cautious.",
+    "script": {
+      "opening": "“What will these tablets do to me?”"
+    }
+  },
+  {
+    "id": 241,
+    "station": "Examination Station 1 (Maudsley)",
+    "candidate": "Conduct a mental state examination of a patient presenting with suspiciousness and odd behaviour.",
+    "roleplayer": "You are the patient. Guarded, suspicious, reluctant to engage.",
+    "script": {
+      "opening": "“Why are you asking me so many questions? Are you with them?”"
+    }
+  },
+  {
+    "id": 242,
+    "station": "Examination Station 2 (Maudsley)",
+    "candidate": "Carry out a risk assessment in a patient with suicidal ideation.",
+    "roleplayer": "You are the patient. Depressed, withdrawn, ambivalent about living.",
+    "script": {
+      "opening": "“Sometimes I think it’d be easier if I wasn’t here.”"
+    }
+  },
+  {
+    "id": 243,
+    "station": "Examination Station 3 (Maudsley)",
+    "candidate": "Conduct a cognitive examination for memory impairment in an elderly patient.",
+    "roleplayer": "You are the patient. Forgetful, anxious, defensive.",
+    "script": {
+      "opening": "“I keep losing things, it’s so frustrating.”"
+    }
+  },
+  {
+    "id": 244,
+    "station": "Examination Station 4 (Maudsley)",
+    "candidate": "Perform a mental state examination of mood in a young adult with depression.",
+    "roleplayer": "You are the patient. Low, hopeless, tearful.",
+    "script": {
+      "opening": "“I feel like nothing will ever get better.”",
+      "sleep": "If asked about sleep → “I can’t sleep at night.”",
+      "guilt": "If asked about guilt → “I feel like I’ve failed everyone.”",
+      "mood": "Assess mood (subjective and objective)."
+    }
+  },
+  {
+    "id": 245,
+    "station": "Examination Station 5 (Maudsley)",
+    "candidate": "Assess for thought disorder in a patient with suspected schizophrenia.",
+    "roleplayer": "You are the patient. Speech is tangential and occasionally disorganized.",
+    "script": {
+      "opening": "“The world is connected, everything joins up.”"
+    }
+  },
+  {
+    "id": 246,
+    "station": "Examination Station 6 (Maudsley)",
+    "candidate": "Conduct an examination for hallucinations in a patient with psychosis.",
+    "roleplayer": "You are the patient. Distracted, sometimes responding to voices.",
+    "script": {
+      "opening": "“Sorry, what? They’re talking again.”"
+    }
+  },
+  {
+    "id": 247,
+    "station": "Examination Station 7 (Maudsley)",
+    "candidate": "Perform a capacity assessment for treatment refusal in a depressed patient.",
+    "roleplayer": "You are the patient. Refuses medication, feels hopeless.",
+    "script": {
+      "opening": "“I don’t want your pills. Just leave me.”"
+    }
+  },
+  {
+    "id": 248,
+    "station": "Examination Station 8 (Maudsley)",
+    "candidate": "Conduct a mental state examination for mania in a middle-aged patient.",
+    "roleplayer": "You are the patient. Euphoric, pressured speech, distracted.",
+    "script": {
+      "opening": "“I feel amazing, I’ve got so many ideas!”",
+      "sleep": "If asked about sleep → “Who needs sleep? I’ve been working on projects all night.”",
+      "mood": "Assess mood, speech, thought form."
+    }
+  },
+  {
+    "id": 249,
+    "station": "Examination Station 9 (Maudsley)",
+    "candidate": "Assess for extrapyramidal side effects (EPSE) in a patient on antipsychotics.",
+    "roleplayer": "You are the patient. Stiff movements, tremor, discomfort.",
+    "script": {
+      "opening": "“I feel so stiff and shaky.”"
+    }
+  },
+  {
+    "id": 250,
+    "station": "Examination Station 10 (Maudsley)",
+    "candidate": "Conduct a risk assessment for violence in a patient with psychosis.",
+    "roleplayer": "You are the patient. Irritable, guarded, occasional hostility.",
+    "script": {
+      "opening": "“People are out to get me. I’ll strike first if I have to.”"
+    }
+  },
+  {
+    "id": 251,
+    "station": "Examination Station 11 (Maudsley)",
+    "candidate": "Conduct a cognitive assessment in a patient with possible delirium.",
+    "roleplayer": "You are the patient. Fluctuating attention, disoriented, agitated at times.",
+    "script": {
+      "opening": "“Where am I? What’s happening?”",
+      "sleep": "If reassured → “Leave me alone, I need to sleep.”"
+    }
+  },
+  {
+    "id": 252,
+    "station": "Examination Station 12 (Maudsley)",
+    "candidate": "Perform a MSE of thought content in a patient with persecutory delusions.",
+    "roleplayer": "You are the patient. Convinced neighbours are spying.",
+    "script": {
+      "opening": "“They’ve bugged my phone.”"
+    }
+  },
+  {
+    "id": 253,
+    "station": "Examination Station 13 (Maudsley)",
+    "candidate": "Carry out a capacity assessment for refusing admission in a psychotic patient.",
+    "roleplayer": "You are the patient. Refuses hospital, paranoid, lacks insight.",
+    "script": {
+      "opening": "“You’re trying to lock me up.”"
+    }
+  },
+  {
+    "id": 254,
+    "station": "Examination Station 14 (Maudsley)",
+    "candidate": "Conduct a MSE for anxiety in a young woman with panic attacks.",
+    "roleplayer": "You are the patient. Restless, tense, worried.",
+    "script": {
+      "opening": "“My heart races, I think I’m dying.”"
+    }
+  },
+  {
+    "id": 255,
+    "station": "Examination Station 15 (Maudsley)",
+    "candidate": "Assess a patient with suspected OCD.",
+    "roleplayer": "You are the patient. Anxious, embarrassed.",
+    "script": {
+      "opening": "“I can’t stop washing my hands.”"
+    }
+  },
+  {
+    "id": 256,
+    "station": "Examination Station 16 (Maudsley)",
+    "candidate": "Conduct an MSE for hypomania.",
+    "roleplayer": "You are the patient. Cheerful, mildly overconfident.",
+    "script": {
+      "opening": "“I feel fantastic, full of energy.”",
+      "sleep": "If asked about sleep → “Four hours is plenty.”",
+      "mood": "Distinguish from normal elevated mood."
+    }
+  },
+  {
+    "id": 257,
+    "station": "Examination Station 17 (Maudsley)",
+    "candidate": "Perform a cognitive examination in a patient with possible early dementia.",
+    "roleplayer": "You are the patient. Repeats questions, appears worried.",
+    "script": {
+      "opening": "“I keep forgetting where I put things.”"
+    }
+  },
+  {
+    "id": 258,
+    "station": "Examination Station 18 (Maudsley)",
+    "candidate": "Conduct a risk assessment for self-harm in a teenager.",
+    "roleplayer": "You are the patient. Withdrawn, evasive, has scars.",
+    "script": {
+      "opening": "“It helps me cope.”"
+    }
+  },
+  {
+    "id": 259,
+    "station": "Examination Station 19 (Maudsley)",
+    "candidate": "Conduct a MSE for PTSD in a soldier recently returned from combat.",
+    "roleplayer": "You are the patient. Hypervigilant, distressed, avoids eye contact.",
+    "script": {
+      "opening": "“I can’t sleep, I keep seeing it again.”"
+    }
+  },
+  {
+    "id": 260,
+    "station": "Examination Station 20 (Maudsley)",
+    "candidate": "Assess for thought disorder and disorganized behaviour.",
+    "roleplayer": "You are the patient. Incoherent at times, disorganized.",
+    "script": {
+      "opening": "“The stars are talking, and I’m the chosen one.”"
+    }
+  },
+  {
+    "id": 261,
+    "station": "Examination Station 21 (Maudsley, Mental Examination)",
+    "candidate": "Conduct a MSE for catatonia in a patient with schizophrenia.",
+    "roleplayer": "You are the patient. Immobile, mute at times, shows posturing.",
+    "script": {
+      "opening": "remains silent, stares blankly."
+    }
+  },
+  {
+    "id": 262,
+    "station": "Examination Station 22 (Maudsley, Mental Examination)",
+    "candidate": "Carry out an MSE of perceptual abnormalities in a depressed patient with psychotic features.",
+    "roleplayer": "You are the patient. Sad, tearful, hearing accusatory voices.",
+    "script": {
+      "opening": "“They keep saying I’m worthless.”",
+      "mood": "Explore hallucinations and mood congruence."
+    }
+  },
+  {
+    "id": 263,
+    "station": "Examination Station 23 (Maudsley, Physical Examination – side effects)",
+    "candidate": "Perform an examination for tardive dyskinesia in a patient on long-term antipsychotics.",
+    "roleplayer": "You are the patient. Involuntary mouth movements, embarrassed.",
+    "script": {
+      "opening": "“I can’t stop making these faces.”"
+    }
+  },
+  {
+    "id": 264,
+    "station": "Examination Station 24 (Maudsley, Mental Examination)",
+    "candidate": "Conduct an MSE for insight in a psychotic patient.",
+    "roleplayer": "You are the patient. Convinced of delusion, no insight.",
+    "script": {
+      "opening": "“There’s nothing wrong with me.”"
+    }
+  },
+  {
+    "id": 265,
+    "station": "Examination Station 25 (Maudsley, Mental Examination)",
+    "candidate": "Carry out a risk assessment for harm to others in a manic patient.",
+    "roleplayer": "You are the patient. Euphoric, irritable, grandiose.",
+    "script": {
+      "opening": "“I’m destined to lead the country!”"
+    }
+  },
+  {
+    "id": 266,
+    "station": "Examination Station 26 (Maudsley, Mental Examination)",
+    "candidate": "Perform a MSE for formal thought disorder.",
+    "roleplayer": "You are the patient. Shows derailment, tangentiality.",
+    "script": {
+      "opening": "“The sky is blue, so I must be king.”"
+    }
+  },
+  {
+    "id": 267,
+    "station": "Examination Station 27 (Maudsley, Physical Examination – neurological side effects)",
+    "candidate": "Assess for Parkinsonism induced by antipsychotics.",
+    "roleplayer": "You are the patient. Stiff, tremulous, shuffling gait.",
+    "script": {
+      "opening": "“My hands won’t stop shaking.”"
+    }
+  },
+  {
+    "id": 268,
+    "station": "Examination Station 28 (Maudsley, Mental Examination)",
+    "candidate": "Carry out an MSE for anxiety and avoidance in agoraphobia.",
+    "roleplayer": "You are the patient. Anxious, avoids public spaces.",
+    "script": {
+      "opening": "“I panic whenever I step outside.”"
+    }
+  },
+  {
+    "id": 269,
+    "station": "Examination Station 29 (Maudsley, Mental Examination)",
+    "candidate": "Conduct a risk assessment for neglect in a psychotic patient.",
+    "roleplayer": "You are the patient. Poor self-care, dishevelled, denies problem.",
+    "script": {
+      "opening": "“Why should I wash? I’m fine as I am.”"
+    }
+  },
+  {
+    "id": 270,
+    "station": "Examination Station 30 (Maudsley, Mental Examination)",
+    "candidate": "Perform a cognitive assessment for frontal lobe dysfunction.",
+    "roleplayer": "You are the patient. Impulsive, poor planning, distractible.",
+    "script": {
+      "opening": "“I can’t seem to finish anything.”"
+    }
+  },
+  {
+    "id": 271,
+    "station": "Examination Station 31 (Maudsley, Mental Examination)",
+    "candidate": "Conduct a MSE for mood disorder in a severely depressed patient.",
+    "roleplayer": "You are the patient. Withdrawn, minimal speech, hopeless.",
+    "script": {
+      "opening": "“There’s no point in anything.”",
+      "sleep": "If asked about sleep → “I lie awake most nights.”"
+    }
+  },
+  {
+    "id": 272,
+    "station": "Examination Station 32 (Maudsley, Physical Examination – side effects)",
+    "candidate": "Perform an examination for akathisia in a patient on antipsychotics.",
+    "roleplayer": "You are the patient. Restless, pacing, uncomfortable.",
+    "script": {
+      "opening": "“I just can’t sit still.”"
+    }
+  },
+  {
+    "id": 273,
+    "station": "Examination Station 33 (Maudsley, Mental Examination)",
+    "candidate": "Carry out an MSE of speech and thought in mania.",
+    "roleplayer": "You are the patient. Talkative, pressured speech.",
+    "script": {
+      "opening": "“Doctor, I’ve got so many ideas!”"
+    }
+  },
+  {
+    "id": 274,
+    "station": "Examination Station 34 (Maudsley, Mental Examination)",
+    "candidate": "Assess suicide risk in a middle-aged man with recent bereavement.",
+    "roleplayer": "You are the patient. Tearful, hopeless, evasive.",
+    "script": {
+      "opening": "“I’ve lost everything that mattered.”"
+    }
+  },
+  {
+    "id": 275,
+    "station": "Examination Station 35 (Maudsley, Mental Examination)",
+    "candidate": "Conduct a MSE for memory impairment in alcohol misuse.",
+    "roleplayer": "You are the patient. Confabulates, poor recall.",
+    "script": {
+      "opening": "“I was at the pub this morning.” (actually untrue)"
+    }
+  },
+  {
+    "id": 276,
+    "station": "Examination Station 36 (Maudsley, Physical Examination – side effects)",
+    "candidate": "Perform an examination for neuroleptic malignant syndrome (NMS).",
+    "roleplayer": "You are the patient. Stiff, confused, feverish.",
+    "script": {
+      "opening": "“I feel so hot and stiff.”"
+    }
+  },
+  {
+    "id": 277,
+    "station": "Examination Station 37 (Maudsley, Mental Examination)",
+    "candidate": "Conduct a MSE for psychomotor retardation in depression.",
+    "roleplayer": "You are the patient. Slow, low voice, long pauses.",
+    "script": {
+      "opening": "“It’s hard… to even… talk.”"
+    }
+  },
+  {
+    "id": 278,
+    "station": "Examination Station 38 (Maudsley, Mental Examination)",
+    "candidate": "Carry out an MSE for overvalued ideas in anorexia nervosa.",
+    "roleplayer": "You are the patient. Emaciated, denies illness.",
+    "script": {
+      "opening": "“I’m still too fat.”"
+    }
+  },
+  {
+    "id": 279,
+    "station": "Examination Station 39 (Maudsley, Mental Examination)",
+    "candidate": "Assess hallucinations in a patient with schizophrenia.",
+    "roleplayer": "You are the patient. Hearing running commentary voices.",
+    "script": {
+      "opening": "“They’re talking about me again.”"
+    }
+  },
+  {
+    "id": 280,
+    "station": "Examination Station 40 (Maudsley, Mental Examination)",
+    "candidate": "Conduct a cognitive examination for attention and concentration.",
+    "roleplayer": "You are the patient. Distractible, struggles to focus.",
+    "script": {
+      "opening": "“Sorry, what did you say?”"
+    }
+  },
+  {
+    "id": 281,
+    "station": "History Taking Station 1 (Zhang)",
+    "candidate": "Take a history from a 30-year-old man brought by his wife because of suspiciousness and odd behaviour.",
+    "roleplayer": "You are the wife. Concerned, describe him as isolating, suspicious, talking to himself.",
+    "script": {
+      "opening": "“He thinks people are following him.”"
+    }
+  },
+  {
+    "id": 282,
+    "station": "History Taking Station 2 (Zhang)",
+    "candidate": "Take a history from a 45-year-old woman with recurrent low mood.",
+    "roleplayer": "You are the patient. Tearful, poor sleep, guilty ideas.",
+    "script": {
+      "opening": "“I feel so useless.”",
+      "appetite": "If probed → appetite poor, anhedonia."
+    }
+  },
+  {
+    "id": 283,
+    "station": "History Taking Station 3 (Zhang)",
+    "candidate": "Take a history from a patient referred with panic attacks.",
+    "roleplayer": "You are the patient. Sudden episodes of fear, palpitations, sweating.",
+    "script": {
+      "opening": "“It feels like I’m dying when it happens.”"
+    }
+  },
+  {
+    "id": 284,
+    "station": "History Taking Station 4 (Zhang)",
+    "candidate": "Take a history from a 20-year-old student brought after an overdose.",
+    "roleplayer": "You are the patient. Reluctant, flat.",
+    "script": {
+      "opening": "“I didn’t mean to wake up.”"
+    }
+  },
+  {
+    "id": 285,
+    "station": "History Taking Station 5 (Zhang)",
+    "candidate": "Take a history from a 35-year-old man with heavy alcohol use.",
+    "roleplayer": "You are the patient. Drinks daily, minimises problem.",
+    "script": {
+      "opening": "“I just drink to relax.”"
+    }
+  },
+  {
+    "id": 286,
+    "station": "History Taking Station 6 (Zhang)",
+    "candidate": "Take a history from a patient referred with OCD symptoms.",
+    "roleplayer": "You are the patient. Compulsively checks locks, washes hands.",
+    "script": {
+      "opening": "“I can’t stop checking the door.”"
+    }
+  },
+  {
+    "id": 287,
+    "station": "History Taking Station 7 (Zhang)",
+    "candidate": "Take a history from a teenager with eating difficulties.",
+    "roleplayer": "You are the patient. Restricts food, over-exercises.",
+    "script": {
+      "opening": "“I feel fat.”"
+    }
+  },
+  {
+    "id": 288,
+    "station": "History Taking Station 8 (Zhang)",
+    "candidate": "Take a history from a 70-year-old man with memory loss.",
+    "roleplayer": "You are the spouse. Reports forgetfulness, misplacing items.",
+    "script": {
+      "opening": "“He keeps asking the same questions.”"
+    }
+  },
+  {
+    "id": 289,
+    "station": "History Taking Station 9 (Zhang)",
+    "candidate": "Take a history from a patient with medically unexplained symptoms.",
+    "roleplayer": "You are the patient. Presents with headaches, vague abdominal pain.",
+    "script": {
+      "opening": "“No one can find anything wrong with me.”"
+    }
+  },
+  {
+    "id": 290,
+    "station": "History Taking Station 10 (Zhang)",
+    "candidate": "Take a history from a mother worried about her 5-year-old child’s behaviour.",
+    "roleplayer": "You are the mother. Child hyperactive, disruptive at school.",
+    "script": {
+      "opening": "“He just can’t sit still.”",
+      "sleep": "If probed → problems with sleep, impulsivity."
+    }
+  },
+  {
+    "id": 291,
+    "station": "History Taking Station 11 (Zhang)",
+    "candidate": "Take a history from a 22-year-old student with social anxiety.",
+    "roleplayer": "You are the patient. Fearful of scrutiny, avoids lectures.",
+    "script": {
+      "opening": "“I feel like everyone is watching me.”"
+    }
+  },
+  {
+    "id": 292,
+    "station": "History Taking Station 12 (Zhang)",
+    "candidate": "Take a history from a woman with postnatal low mood.",
+    "roleplayer": "You are the patient. Tearful, fatigued, guilty about baby care.",
+    "script": {
+      "opening": "“I’m not a good mother.”"
+    }
+  },
+  {
+    "id": 293,
+    "station": "History Taking Station 13 (Zhang)",
+    "candidate": "Take a history from a 40-year-old man with gambling problems.",
+    "roleplayer": "You are the patient. Spends large sums, hides debts.",
+    "script": {
+      "opening": "“I lost £2000 last week.”"
+    }
+  },
+  {
+    "id": 294,
+    "station": "History Taking Station 14 (Zhang)",
+    "candidate": "Take a history from a patient with PTSD symptoms.",
+    "roleplayer": "You are the patient. Trauma survivor, intrusive flashbacks.",
+    "script": {
+      "opening": "“I still see it happening.”"
+    }
+  },
+  {
+    "id": 295,
+    "station": "History Taking Station 15 (Zhang)",
+    "candidate": "Take a history from a teenager with deliberate self-harm.",
+    "roleplayer": "You are the patient. Withdrawn, low self-esteem.",
+    "script": {
+      "opening": "“I cut myself when it gets too much.”"
+    }
+  },
+  {
+    "id": 296,
+    "station": "History Taking Station 16 (Zhang)",
+    "candidate": "Take a history from a 45-year-old man with violent outbursts.",
+    "roleplayer": "You are the patient. Angry, denies problem.",
+    "script": {
+      "opening": "“People just wind me up.”"
+    }
+  },
+  {
+    "id": 297,
+    "station": "History Taking Station 17 (Zhang)",
+    "candidate": "Take a history from a woman presenting with conversion symptoms.",
+    "roleplayer": "You are the patient. Sudden limb weakness, inconsistent signs.",
+    "script": {
+      "opening": "“I can’t move my arm.”"
+    }
+  },
+  {
+    "id": 298,
+    "station": "History Taking Station 18 (Zhang)",
+    "candidate": "Take a history from a patient with chronic insomnia.",
+    "roleplayer": "You are the patient. Complains of poor sleep for months.",
+    "script": {
+      "opening": "“I just can’t sleep at all.”",
+      "sleep": "Explore sleep hygiene."
+    }
+  },
+  {
+    "id": 299,
+    "station": "History Taking Station 19 (Zhang)",
+    "candidate": "Take a history from a man with pathological jealousy.",
+    "roleplayer": "You are the patient. Convinced wife is unfaithful.",
+    "script": {
+      "opening": "“She’s seeing someone else, I know it.”"
+    }
+  },
+  {
+    "id": 300,
+    "station": "History Taking Station 20 (Zhang)",
+    "candidate": "Take a history from a woman with somatisation disorder.",
+    "roleplayer": "You are the patient. Multiple unexplained physical complaints.",
+    "script": {
+      "opening": "“There’s always something wrong with me.”"
+    }
+  },
+  {
+    "id": 301,
+    "station": "Management Station 1 (Zhang)",
+    "candidate": "Explain ECT to a patient with treatment-resistant depression who is anxious about the procedure.",
+    "roleplayer": "You are the patient. Worried it will be painful or damaging.",
+    "script": {
+      "opening": "“They want me to have shocks — is it safe?”"
+    }
+  },
+  {
+    "id": 302,
+    "station": "Management Station 2 (Zhang)",
+    "candidate": "Discuss lithium treatment with a bipolar patient starting prophylaxis.",
+    "roleplayer": "You are the patient. Unsure about blood tests, side effects.",
+    "script": {
+      "opening": "“Do I have to keep coming for blood tests?”"
+    }
+  },
+  {
+    "id": 303,
+    "station": "Management Station 3 (Zhang)",
+    "candidate": "Explain Clozapine monitoring to a relative of a patient with treatment-resistant schizophrenia.",
+    "roleplayer": "You are the relative. Anxious about safety.",
+    "script": {
+      "opening": "“Why does he need so many blood tests?”"
+    }
+  },
+  {
+    "id": 304,
+    "station": "Management Station 4 (Zhang)",
+    "candidate": "Discuss antipsychotic side effects with a patient who has developed tremor and stiffness.",
+    "roleplayer": "You are the patient. Worried about Parkinson’s disease.",
+    "script": {
+      "opening": "“My hands keep shaking.”"
+    }
+  },
+  {
+    "id": 305,
+    "station": "Management Station 5 (Zhang)",
+    "candidate": "Explain psychological therapy for PTSD to a trauma survivor.",
+    "roleplayer": "You are the patient. Fearful of talking about trauma.",
+    "script": {
+      "opening": "“I don’t want to relive it all again.”"
+    }
+  },
+  {
+    "id": 306,
+    "station": "Management Station 6 (Zhang)",
+    "candidate": "Discuss alcohol detoxification with a man drinking 30 units/day.",
+    "roleplayer": "You are the patient. Wants to stop but fears withdrawal.",
+    "script": {
+      "opening": "“I can’t sleep if I don’t drink.”"
+    }
+  },
+  {
+    "id": 307,
+    "station": "Management Station 7 (Zhang)",
+    "candidate": "Explain psychoeducation in schizophrenia to a young man after discharge.",
+    "roleplayer": "You are the patient. Confused about relapse prevention.",
+    "script": {
+      "opening": "“Why do I need to take tablets if I feel fine?”"
+    }
+  },
+  {
+    "id": 308,
+    "station": "Management Station 8 (Zhang)",
+    "candidate": "Discuss risks and benefits of SSRIs with a patient with depression.",
+    "roleplayer": "You are the patient. Hesitant about starting tablets.",
+    "script": {
+      "opening": "“Will I be on these forever?”"
+    }
+  },
+  {
+    "id": 309,
+    "station": "Management Station 9 (Zhang)",
+    "candidate": "Explain electroconvulsive therapy (ECT) to a relative asked to consent on patient’s behalf.",
+    "roleplayer": "You are the relative. Unsure about risks.",
+    "script": {
+      "opening": "“Isn’t this barbaric?”"
+    }
+  },
+  {
+    "id": 310,
+    "station": "Management Station 10 (Zhang)",
+    "candidate": "Discuss risk assessment in suicidal ideation with a patient in A&E.",
+    "roleplayer": "You are the patient. Guarded but admits hopelessness.",
+    "script": {
+      "opening": "“I don’t see the point in living.”"
+    }
+  },
+  {
+    "id": 311,
+    "station": "Management Station 11 (Zhang)",
+    "candidate": "Explain Depot Antipsychotic Injections to a patient reluctant to switch from tablets.",
+    "roleplayer": "You are the patient. Suspicious, thinks injections are punishment.",
+    "script": {
+      "opening": "“Why do you want to stick a needle in me every month?”"
+    }
+  },
+  {
+    "id": 312,
+    "station": "Management Station 12 (Zhang)",
+    "candidate": "Discuss managing benzodiazepine dependence with a long-term user.",
+    "roleplayer": "You are the patient. Insists tablets are the only thing that helps.",
+    "script": {
+      "opening": "“I can’t sleep without them.”",
+      "sleep": "Offer alternative sleep strategies."
+    }
+  },
+  {
+    "id": 313,
+    "station": "Management Station 13 (Zhang)",
+    "candidate": "Explain psychoeducation in bipolar disorder to a newly diagnosed patient.",
+    "roleplayer": "You are the patient. Denies manic symptoms were illness.",
+    "script": {
+      "opening": "“I just felt energetic, not unwell.”"
+    }
+  },
+  {
+    "id": 314,
+    "station": "Management Station 14 (Zhang)",
+    "candidate": "Discuss ECT relapse prevention with a patient who responded well.",
+    "roleplayer": "You are the patient. Wants to avoid future treatment.",
+    "script": {
+      "opening": "“I don’t want to go through that again.”"
+    }
+  },
+  {
+    "id": 315,
+    "station": "Management Station 15 (Zhang)",
+    "candidate": "Explain risk of antidepressant-induced mania to a patient with bipolar depression.",
+    "roleplayer": "You are the patient. Insists only antidepressants work.",
+    "script": {
+      "opening": "“I don’t need mood stabilisers.”",
+      "mood": "Stress importance of mood stabiliser."
+    }
+  },
+  {
+    "id": 316,
+    "station": "Management Station 16 (Zhang)",
+    "candidate": "Discuss risk of suicide in schizophrenia with a worried relative.",
+    "roleplayer": "You are the relative. Fearful patient may harm themselves.",
+    "script": {
+      "opening": "“He keeps saying life isn’t worth it.”"
+    }
+  },
+  {
+    "id": 317,
+    "station": "Management Station 17 (Zhang)",
+    "candidate": "Explain antipsychotic metabolic side effects to a patient with weight gain.",
+    "roleplayer": "You are the patient. Distressed about appearance.",
+    "script": {
+      "opening": "“I’ve put on two stone since starting these.”",
+      "appetite": "If asked → complains of increased appetite."
+    }
+  },
+  {
+    "id": 318,
+    "station": "Management Station 18 (Zhang)",
+    "candidate": "Discuss electroconvulsive therapy consent with a patient detained under MHA.",
+    "roleplayer": "You are the patient. Resistant, fearful of coercion.",
+    "script": {
+      "opening": "“You can’t force me to do this, can you?”"
+    }
+  },
+  {
+    "id": 319,
+    "station": "Management Station 19 (Zhang)",
+    "candidate": "Explain psychological treatment for OCD to a young adult.",
+    "roleplayer": "You are the patient. Rituals take hours daily.",
+    "script": {
+      "opening": "“I wash my hands 50 times a day.”"
+    }
+  },
+  {
+    "id": 320,
+    "station": "Management Station 20 (Zhang)",
+    "candidate": "Discuss shared care in ADHD treatment with a parent.",
+    "roleplayer": "You are the parent. Confused about GP vs specialist role.",
+    "script": {
+      "opening": "“Who’s actually in charge of his tablets?”"
+    }
+  },
+  {
+    "id": 321,
+    "station": "Examination Station 1 (Zhang – Mental Examination)",
+    "candidate": "Conduct a Mental State Examination (MSE) in a patient with suspected schizophrenia.",
+    "roleplayer": "You are the patient. Guarded, suspicious, distracted by voices.",
+    "script": {
+      "opening": "“They’re listening to me right now.”",
+      "mood": "Explore appearance, speech, mood, thought, perception."
+    }
+  },
+  {
+    "id": 322,
+    "station": "Examination Station 2 (Zhang – Mental Examination)",
+    "candidate": "Assess cognitive function in a 70-year-old with memory complaints.",
+    "roleplayer": "You are the patient. Forgetful, repeats questions.",
+    "script": {
+      "opening": "“I can’t remember what day it is.”"
+    }
+  },
+  {
+    "id": 323,
+    "station": "Examination Station 3 (Zhang – Mental Examination)",
+    "candidate": "Perform a risk assessment for suicide in a young adult presenting with depression.",
+    "roleplayer": "You are the patient. Withdrawn, reluctant to engage.",
+    "script": {
+      "opening": "“I don’t want to be here anymore.”"
+    }
+  },
+  {
+    "id": 324,
+    "station": "Examination Station 4 (Zhang – Mental Examination)",
+    "candidate": "Assess thought disorder in a patient referred by GP.",
+    "roleplayer": "You are the patient. Tangential, neologisms.",
+    "script": {
+      "opening": "“The sun speaks in numbers.”"
+    }
+  },
+  {
+    "id": 325,
+    "station": "Examination Station 5 (Zhang – Mental Examination)",
+    "candidate": "Carry out a MSE focusing on mood and affect in a patient with suspected bipolar disorder.",
+    "roleplayer": "You are the patient. Elevated, pressured speech, irritable if interrupted.",
+    "script": {
+      "opening": "“I’ve got so many business ideas!”",
+      "sleep": "If asked → describes little sleep.",
+      "mood": "Comment on elevated mood, affect, pressure of speech."
+    }
+  },
+  {
+    "id": 326,
+    "station": "Examination Station 6 (Zhang – Mental Examination)",
+    "candidate": "Perform a cognitive screening for dementia in an elderly patient brought by daughter.",
+    "roleplayer": "You are the patient. Pleasant but disoriented.",
+    "script": {
+      "opening": "“Is it morning or evening?”"
+    }
+  },
+  {
+    "id": 327,
+    "station": "Examination Station 7 (Zhang – Mental Examination)",
+    "candidate": "Assess hallucinations in a patient reporting voices.",
+    "roleplayer": "You are the patient. Distracted, intermittently responding to unseen stimuli.",
+    "script": {
+      "opening": "“They’re telling me I’m evil.”"
+    }
+  },
+  {
+    "id": 328,
+    "station": "Examination Station 8 (Zhang – Mental Examination)",
+    "candidate": "Conduct a capacity assessment for consent to treatment in a depressed patient.",
+    "roleplayer": "You are the patient. Low mood, hopeless, avoids eye contact.",
+    "script": {
+      "opening": "“It doesn’t matter what happens to me.”"
+    }
+  },
+  {
+    "id": 329,
+    "station": "Examination Station 9 (Zhang – Mental Examination)",
+    "candidate": "Perform an examination of abnormal movements in a patient on long-term antipsychotics.",
+    "roleplayer": "You are the patient. Jerky tongue, lip smacking.",
+    "script": {
+      "opening": "“My jaw won’t stay still.”"
+    }
+  },
+  {
+    "id": 330,
+    "station": "Examination Station 10 (Zhang – Mental Examination)",
+    "candidate": "Carry out a Mini-Mental State Examination (MMSE) in a patient referred with memory concerns.",
+    "roleplayer": "You are the patient. Cooperative but impaired recall.",
+    "script": {
+      "opening": "“I keep losing things around the house.”"
+    }
+  },
+  {
+    "id": 331,
+    "station": "Examination Station 11 (Zhang – Mental Examination)",
+    "candidate": "Conduct an MSE focusing on thought content in a patient with persecutory delusions.",
+    "roleplayer": "You are the patient. Convinced neighbours are spying.",
+    "script": {
+      "opening": "“They’ve bugged my flat.”"
+    }
+  },
+  {
+    "id": 332,
+    "station": "Examination Station 12 (Zhang – Mental Examination)",
+    "candidate": "Perform a risk assessment for violence in a patient with paranoid schizophrenia.",
+    "roleplayer": "You are the patient. Angry, feels threatened.",
+    "script": {
+      "opening": "“If they come near me again, I’ll hit them.”"
+    }
+  },
+  {
+    "id": 333,
+    "station": "Examination Station 13 (Zhang – Mental Examination)",
+    "candidate": "Assess insight in a patient with mania.",
+    "roleplayer": "You are the patient. Euphoric, denies illness.",
+    "script": {
+      "opening": "“I don’t need help — I’m just special.”"
+    }
+  },
+  {
+    "id": 334,
+    "station": "Examination Station 14 (Zhang – Mental Examination)",
+    "candidate": "Perform an MSE focusing on affective symptoms in a patient with depression.",
+    "roleplayer": "You are the patient. Low mood, anhedonia.",
+    "script": {
+      "opening": "“Nothing brings me joy anymore.”",
+      "mood": "Explore affect and mood congruence."
+    }
+  },
+  {
+    "id": 335,
+    "station": "Examination Station 15 (Zhang – Mental Examination)",
+    "candidate": "Carry out a MSE focusing on speech and thought form in schizophrenia.",
+    "roleplayer": "You are the patient. Disorganised, clang associations.",
+    "script": {
+      "opening": "“The cat sat, the bat spat, flat hat.”"
+    }
+  },
+  {
+    "id": 336,
+    "station": "Examination Station 16 (Zhang – Mental Examination)",
+    "candidate": "Assess cognition in delirium in a hospital inpatient.",
+    "roleplayer": "You are the patient. Fluctuating attention, confused.",
+    "script": {
+      "opening": "“Where am I? What’s happening?”"
+    }
+  },
+  {
+    "id": 337,
+    "station": "Examination Station 17 (Zhang – Mental Examination)",
+    "candidate": "Perform a capacity assessment in a patient refusing medication for psychosis.",
+    "roleplayer": "You are the patient. Suspicious, guarded.",
+    "script": {
+      "opening": "“You’re trying to poison me.”"
+    }
+  },
+  {
+    "id": 338,
+    "station": "Examination Station 18 (Zhang – Mental Examination)",
+    "candidate": "Assess risk of self-neglect in a patient with severe depression.",
+    "roleplayer": "You are the patient. Withdrawn, unkempt.",
+    "script": {
+      "opening": "“I haven’t eaten for days.”"
+    }
+  },
+  {
+    "id": 339,
+    "station": "Examination Station 19 (Zhang – Mental Examination)",
+    "candidate": "Perform a cognitive assessment in alcohol-related brain damage.",
+    "roleplayer": "You are the patient. Disoriented, confabulating.",
+    "script": {
+      "opening": "“I was at work this morning” (not true)."
+    }
+  },
+  {
+    "id": 340,
+    "station": "Examination Station 20 (Zhang – Mental Examination)",
+    "candidate": "Carry out an MSE in borderline personality disorder, focusing on affect regulation.",
+    "roleplayer": "You are the patient. Emotional, impulsive.",
+    "script": {
+      "opening": "“I just want to die sometimes.”",
+      "mood": "Explore mood instability."
+    }
+  },
+  {
+    "id": 341,
+    "station": "full set of 300 stations across SPMM, Maudsley, and Zhang:",
+    "candidate": "",
+    "roleplayer": "",
+    "script": {}
+  }
+]

@@ -1,53 +1,56 @@
-import { NextResponse, NextRequest } from "next/server";
+// app/api/webhook/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { Readable } from "stream";
-import { adminDb } from "@/lib/firebaseAdmin"; // ✅ use the correct path and name
+import { adminDb } from "@/lib/firebase-admin";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  // apiVersion removed to avoid type error
-});
+export const config = { api: { bodyParser: false } };
 
-export const config = {
-  api: {
-    bodyParser: false, // ✅ Disable Next.js default body parsing
-  },
-};
-
-async function buffer(readable: Readable): Promise<Buffer> {
-  const chunks = [];
-  for await (const chunk of readable) {
-    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
-  }
-  return Buffer.concat(chunks);
-}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: NextRequest) {
-  const rawBody = await req.arrayBuffer(); // ✅ Still needed
-  const bodyBuffer = Buffer.from(rawBody); // ✅ Convert to Buffer
-  const signature = req.headers.get("stripe-signature") as string;
+  const sig = req.headers.get("stripe-signature")!;
+  const body = await req.text();
 
+  let event: Stripe.Event;
   try {
-    const event = stripe.webhooks.constructEvent(
-      bodyBuffer,
-      signature,
+    event = stripe.webhooks.constructEvent(
+      body,
+      sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-
-    // ✅ Handle event
-    switch (event.type) {
-      case "checkout.session.completed":
-        const session = event.data.object;
-        console.log("Payment success:", session.id);
-        // Add logic to update Firebase or DB if needed
-        break;
-
-      default:
-        console.log("Unhandled event type:", event.type);
-    }
-
-    return NextResponse.json({ received: true });
   } catch (err: any) {
-    console.error("Webhook Error:", err.message);
-    return NextResponse.json({ error: err.message }, { status: 400 });
+    console.error("Webhook signature error:", err.message);
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
+
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    const uid = session.metadata?.uid;
+    const product = session.metadata?.product;
+    const durationDays = Number(session.metadata?.durationDays || 0);
+
+    if (uid && product && durationDays > 0) {
+      const expiresAt = Date.now() + durationDays * 24 * 60 * 60 * 1000;
+
+      // ✅ FIX: adminDb is not a function, so remove ()
+      await adminDb
+        .collection("users")
+        .doc(uid)
+        .collection("entitlements")
+        .doc(product)
+        .set(
+          {
+            product,
+            expiresAt,
+            sessionId: session.id,
+            updatedAt: Date.now(),
+          },
+          { merge: true }
+        );
+
+      console.log(`Entitlement saved for user ${uid}: ${product}`);
+    }
+  }
+
+  return NextResponse.json({ received: true });
 }
