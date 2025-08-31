@@ -1,54 +1,83 @@
-import { NextResponse } from 'next/server'; 
+// app/api/mockone/route.ts
+
 import OpenAI from 'openai';
+import { NextResponse } from 'next/server';
 
-export async function POST(request: Request) {
-    // 1. Check for the API key in environment variables.
-    if (!process.env.OPENAI_API_KEY) {
-        return NextResponse.json(
-            { error: 'OPENAI_API_KEY is not set in environment variables.' },
-            { status: 500 }
-        );
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+export const runtime = 'edge';
+
+export async function POST(req: Request) {
+  try {
+    const formData = await req.formData();
+    const audioFile = formData.get('audio') as File;
+    const actorInstructions = formData.get('actorInstructions') as string;
+    const stationVoice = (formData.get('voice') as string) || 'alloy';
+    const conversationHistory = JSON.parse(
+      (formData.get('conversationHistory') as string) || '[]'
+    );
+
+    if (!audioFile) {
+      return NextResponse.json({ error: 'No audio file provided' }, { status: 400 });
     }
 
-    try {
-        // 2. Safely parse the request body.
-        const { actorInstructions, voice } = await request.json();
+    // 1. Transcribe the user's audio to text using Whisper
+    const transcription = await openai.audio.transcriptions.create({
+      model: 'whisper-1',
+      file: audioFile,
+    });
+    const userTranscript = transcription.text;
 
-        // 3. Ensure required instructions are present.
-        if (!actorInstructions) {
-            return NextResponse.json(
-                { error: 'actorInstructions are required.' },
-                { status: 400 }
-            );
-        }
+    // 2. Get the AI actor's text response using the Chat API
+    const chatMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+      {
+        role: 'system',
+        content: `You are an AI actor in a psychiatry CASC exam. Your personality and what you know are strictly defined by the 'Actor Instructions'.
+        - Your name and role are in the instructions.
+        - Respond naturally and in character based *only* on the instructions provided.
+        - Do not break character or reveal you are an AI.
+        - Keep your responses concise and directly related to the candidate's questions or statements.
+        - If the candidate asks a question not covered by your instructions, respond naturally with something like "I'm not sure about that" or deflect in character.
+        ---
+        ACTOR INSTRUCTIONS:
+        ${actorInstructions}`,
+      },
+      // Add previous turns to maintain context
+      ...conversationHistory,
+      {
+        role: 'user',
+        content: userTranscript,
+      },
+    ];
 
-        // 4. Define the system instructions for the AI's role-play character.
-        const systemPrompt = `You are a professional role-play actor in a medical Objective Structured Clinical Examination (OSCE). 
-Your name and character details are specified in the instructions below. 
-You must strictly adhere to these instructions. Do not break character. 
-Respond naturally and realistically to the candidate's questions. 
-If the candidate is taking too long on one question, gently guide them to the next one as per your instructions. 
-Your current role instructions are: ${actorInstructions}`;
+    const chatResponse = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: chatMessages,
+    });
+    const actorResponseText = chatResponse.choices[0].message.content || 'I am not sure how to respond to that.';
 
-        // 5. Initialize OpenAI client.
-        const openai = new OpenAI({
-            apiKey: process.env.OPENAI_API_KEY,
-        });
+    // 3. Convert the actor's text response to speech using TTS
+    const audioResponse = await openai.audio.speech.create({
+      model: 'tts-1',
+      voice: stationVoice as 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer',
+      input: actorResponseText,
+    });
 
-        // 6. Create a Realtime session with valid parameters.
-        const session = await openai.beta.realtime.sessions.create({
-            model: 'gpt-4o-realtime-preview',
-            instructions: systemPrompt,   // ✅ use "instructions" instead of "system_prompt"
-            voice: voice || 'nova',
-        });
+    const audioBuffer = Buffer.from(await audioResponse.arrayBuffer());
+    
+    // Send back the transcript and the AI's text response along with the audio
+    const headers = new Headers();
+    headers.set('Content-Type', 'audio/mpeg');
+    headers.set('X-User-Transcript', encodeURIComponent(userTranscript));
+    headers.set('X-Actor-Response', encodeURIComponent(actorResponseText));
 
-        // 7. Return the session token.
-        return NextResponse.json({ token: session.client_secret.value });
-    } catch (error) {
-        console.error('Error creating Realtime session:', error);
-        return NextResponse.json(
-            { error: 'Failed to create Realtime session.' },
-            { status: 500 }
-        );
-    }
+    return new NextResponse(audioBuffer, { status: 200, headers });
+
+  } catch (error) {
+    console.error('Error in mockone API:', error);
+    return NextResponse.json({ error: 'An internal server error occurred' }, { status: 500 });
+  }
 }

@@ -1,54 +1,72 @@
-// app/api/score/route.ts
+// app/api/generate-report/route.ts
+import { NextResponse } from "next/server";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
-import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
-import { stations } from "@/lib/stations";
-
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY!,
+    const { candidateName, stations } = await req.json();
+
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([595, 842]); // A4 size
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+    let y = 800;
+
+    // Title
+    page.drawText("CASC Exam Report", {
+      x: 200,
+      y,
+      size: 20,
+      font,
+      color: rgb(0, 0, 0),
     });
+    y -= 40;
 
-    const { scores } = await req.json();
+    // Candidate name
+    page.drawText(`Candidate: ${candidateName}`, {
+      x: 50,
+      y,
+      size: 14,
+      font,
+    });
+    y -= 30;
 
-    const scoringPromises = scores.map(async (stationScore: any) => {
-      const stationData = stations.find(
-        (s) => s.id === stationScore.stationId
-      );
-      if (!stationData) return stationScore;
+    // Station feedback
+    stations.forEach((station: any, index: number) => {
+      page.drawText(`Station ${index + 1}: ${station.title}`, {
+        x: 50,
+        y,
+        size: 12,
+        font,
+      });
+      y -= 20;
 
-      const prompt = `
-        You are a senior psychiatry examiner evaluating a CASC exam performance.
-        Based on the provided transcript and feedback domains, score the candidate.
-        For each domain, provide a score from 1 to 4 (1=Fail, 2=Borderline, 3=Pass, 4=Excellent) and a brief justification.
-        STATION TRANSCRIPT:\n---\n${stationScore.transcript}\n---
-        FEEDBACK DOMAINS:\n---\n${stationData.feedbackDomains}\n---
-        Respond with only a valid JSON object in the format:
-        {
-          "scores": [
-            { "domain": "Name", "score": <1-4>, "justification": "Reason." }
-          ]
-        }
-      `;
-
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [{ role: "system", content: prompt }],
-        response_format: { type: "json_object" },
+      Object.entries(station.feedback).forEach(([domain, feedback]) => {
+        page.drawText(`${domain}: ${feedback}`, {
+          x: 70,
+          y,
+          size: 10,
+          font,
+        });
+        y -= 15;
       });
 
-      const resultJson = JSON.parse(
-        response.choices[0].message.content || "{}"
-      );
-
-      return { ...stationScore, scores: resultJson.scores || [] };
+      y -= 15;
     });
 
-    const finalScores = await Promise.all(scoringPromises);
-    return NextResponse.json(finalScores);
+    // Save PDF
+    const pdfBytes = await pdfDoc.save();
+
+    // ✅ Fix: Convert Uint8Array to Buffer so NextResponse accepts it
+    return new NextResponse(Buffer.from(pdfBytes), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": 'attachment; filename="casc_report.pdf"',
+      },
+    });
   } catch (error) {
-    console.error("Scoring API error:", error);
-    return NextResponse.json({ error: "Scoring failed" }, { status: 500 });
+    console.error(error);
+    return new NextResponse("Error generating PDF", { status: 500 });
   }
 }
